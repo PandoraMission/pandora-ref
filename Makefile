@@ -23,9 +23,6 @@ black:
 isort:
 	$(CMD) isort $(PYMODULE) $(TESTS)
 
-# Serve docs
-serve:
-	$(CMD) mkdocs serve
-
-deploy:
-	$(CMD) mkdocs gh-deploy --force
+# Make the dummy files
+dummy:
+	$(CMD) python -c "import pandoraref;pandoraref.create_dummy_reference_products()"

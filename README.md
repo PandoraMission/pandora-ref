@@ -1,263 +1,126 @@
-# Pandora Blank
+# Pandora Reference
 
-This is a "[blank](https://en.wikipedia.org/wiki/Planchet)" repository which can be used to create tools within the Pandora ecosystem. This has all of the defaults that we require for Pandora software including requirements management with poetry and documentation.
+This package is a repository to hold reference data for the Pandora SmallSat data processing. This repository is **only used to store the current best reference products** for Pandora data processing. Rolling back to previous versions of this package will roll back to previous versions of reference products. All processed products will contain a version number of this package, which links to specific versions of processing files. At any given version number there is a single version of each file.
 
-If you are starting a new Pandora tool from scratch, consider forking this repository and updating it to begin your tool.
+Follow this README strictly when updating products.
 
-## Cloning the Repository
+## Updating any number of reference products
 
-To get started, fork this repository on GitHub, then clone your fork:
+If you are going to update reference products for Pandora processing you must follow these steps.
 
-```sh
-  git clone https://github.com/your-username/pandora-blank.git
-  cd pandora-blank
+1. Clone this repository, if you do not already have a copy
+2. Ensure the repository is up to date (`git pull`)
+3. Go to the specific product within `src/pandoraref/data/` that you wish to update.
+
+- Verify that your new product is compliant with the fits file format of the original product. (Note: If you change the format (e.g. add or remove headers or extensions), you must update the minor version number of this package.)
+- Ensure your new product has an incremented version number in the header, compared to the old product.
+- If you are changing the file name, ensure the new product follows the file naming convention.
+
+4. Replace the file in the `src/pandoraref/data/`.
+5. Where appropriate, update the README for each file.
+6. In this modules `__init__.py` file, ensure that the product name is correct in the loading class. If you have added a new file or changed a name, make sure to update the class.
+7. In this modules `pyproject.py` file update the version number. Follow this convention
+
+- Updating information within this package (e.g. readmes, docstrings): update patch number
+- Updating data within files, but not changing any file structure: update patch number
+- Updating data and changing the file structure (e.g. adding or removing headers or extensions): update minor version number
+- Adding or removing data products entirely: update major version number
+
+8. Update the CHANGELOG for this package.
+
+You may update multiple data products at once, but if you make any changes to this repository you must update the version number of this package.
+
+### Versioning
+
+Version numbers appear in two places:
+
+1. Each file should have its own, consistent version number. If you update a flat field, you should increment the version number in that file.
+2. The package itself represents the full assembly of the reference data products. If any files within the system change, this must be incremented.
+
+When processing Pandora data, refer to the `pandora-ref` package number that was used when processing, so that your processing is reproducible using the same exact set of reference files.
+
+If a file has a version name `dummy` this means this is a file that is for format definition only, and is not meant to be used in practice. `dummy` files should still be in the correct format, and should have data in them so that they can be applied (e.g. a flat field of 1's, a bias value of 0) but they should not contain any real information or expectations.
+
+## Contents
+
+For any given version number this package will have a single file for at least these files for both Pandora detectors
+
+- Flat field
+- Bias image
+- Dark image
+- Gain setting
+- Read noise estimates
+- Bad pixel map
+- Non linearity curve
+- PSF model
+- WCS parameters
+- WCS distortion
+- Quantum Efficiency
+- Throughput
+
+For NIRDA only there will be a single file for
+
+- Wavelength as a function of pixel position (as measured)
+
+### Future contents
+
+It's expected that this repository will eventually include some number of SPICE kernels, and potentially will download and store locally the most recent SPICE kernels for the mission.
+
+## Usage
+
+If you use this package as a dependency to process data, follow these guidelines:
+
+**I want to have my processing be reproducible**
+
+In this case you should set the dependency to a specific stable version of `pandora-ref`. In any product you make you should specify the exact version number of `pandora-ref` you use.
+
+**I want to have my processing have the best possible reference data**
+
+In this case you should set the dependency to a specific major and minor versino of `pandora-ref`, but you can enable any patch number and pull the latest patches any time you run. You should keep any eye out for major or minor package version updates. In the case that there is a major or minor version update you should pull these updates, but you may need to update your code base as the file structures may have changed or new files may have been added. In any product you make you should specify the exact version number of `pandora-ref` you use.
+
+### Installing and importing this package
+
+You can install this package with pip. Once you install it as a dependency you will have the reference files installed locally. You can then find each file using the reference path objects:
+
+```python
+from pandoraref import NIRDAReference
+nirdaref = NIRDAReference()
+
+nirdaref.flat_file
+nirdaref.badpix_file
 ```
 
-## Updating the Repository with a New Package Name
+These will each return strings. You can open the files astropy's FITS module
 
-1. Rename the `packagename` directory inside `src/` to your new package name.
-2. Update `pyproject.toml`:
-   - Change `name = "packagename"` to `name = "your_new_package"`.
-3. Update `mkdocs.yml`:
-   - Change `site_name: packagename` to `site_name: your_new_package`.
-4. Update all imports in the codebase from `packagename` to `your_new_package`.
+```python
+from pandoraref import NIRDAReference
+from astropy.io import fits
+nirdaref = NIRDAReference()
 
-## Using the Config File System
+with fits.open(nirdaref.flat_file) as hdulist:
+    print(hdulist[0].header['VERSION'])
+```
 
-The package includes a configuration system that loads and saves user preferences.
+### Function naming
 
-The configuration file is stored in a directory that users should be able to access invariant of what sort of machine they are using.
+In this package (and all packages) names matter. We follow this naming convention wherever we can:
 
-### Setting default configuration
+- Lower case noun is a property, e.g. `flat_file` is a property which is a string
+- Lower case verb and then noun is a function e.g. `get_flat_file` would be a function
 
-You can update the default configuration for yorur package by updating the `reset_config` function with your defaults. For example, here is the function from one of our existing tools `pandorapsf`:
+Certain verbs imply actions:
 
-   ```python
-   def reset_config():
-       config = configparser.ConfigParser()
-       config["SETTINGS"] = {
-           "log_level": "INFO",
-           "data_dir": user_data_dir("pandorapsf"),
-           "vis_psf_download_location": "https://zenodo.org/records/11228523/files/pandora_vis_2024-05.fits?download=1",
-           "nir_psf_download_location": "https://zenodo.org/records/11153153/files/pandora_nir_2024-05.fits?download=1",
-           "vis_psf_creation_date": "2024-05-14T11:38:14.755119",
-           "nir_psf_creation_date": "2024-05-08T15:02:58.461202",
-       }
-   
-       with open(CONFIGPATH, "w") as configfile:
-           config.write(configfile)
-   ```
+- `get_` implies retrieve and return an object. e.g. `get_wcs` will retrieve a WCS from storage and return that object.
+- `create_` implies it will generatea new object, rather than `get`ting one from file e.g. `create_wcs` will create a new WCS solution from scratch
 
-This sets the default settings, but users can always update the settings themselves if they choose to.
-Settings can be reset to defaults by the user at any time using:
+## What should be stored in this package?
 
-  ```python
-  from packagename import reset_config
-  reset_config()
-  ```
+This package is **not** the place to put codes, processes or data that **generates** reference data products.
 
-If you update default settings, users will have to reset their config to get these changes.
+This package is to
 
-This repository sets up a default log level and a default `data_dir`. This is a directory that you should use to store any package data that needs to be downloaded to run the package. For example, if you needed large PSF files, or a large database, you would put that in this `data_dir`. This folder will be shared by any install of your package on a given machine. This means that multiple installs of a given package will not require redownloading any files in this directory.
+1. Store current best estimates of reference products
+2. Hold functions to **convert** between data between other formats and the expected RDP format. (e.g. if LLNL provided a distortion file as a csv it is allowable to store that CSV and have a function to **convert** it to an expected fits file.)
+3. Hold functions to return versions of RDPs under specific conditions. For example, a function to give the WCS RDP given an expected pointing.
 
-### Updating configuration as a user
-
-Your users can load the configuration with:
-
-  ```python
-  from packagename import load_config
-  config = load_config()
-  ```
-
-If they change the configuration they can save it using
-
-  ```python
-  from packagename import save_config
-  config["SETTINGS"]["log_level"] = "INFO"
-  save_config(config)
-  ```
-
-Users can find where the configuration file is stored using
-
-  ```python
-  from packagename import CONFIGDIR
-  print(CONFIGDIR)
-  ```
-
-## Using the Logging System
-
-The package includes a logging system using `RichHandler` for formatted console output. If you clone this repo, you will automatically have a logger. You can use it like this:
-
-  ```python
-  from packagename import logger
-  logger.info("This is an info message")
-  logger.warning("This is a warning message")
-  ```
-
-The default logger level is set in the config file, but you can update this in your session using the following, where I set the logger level to `"INFO"`.
-
-  ```python
-  from packagename import logger
-  logger.setLevel("INFO")
-  ```
-
-## Managing Dependencies with Poetry
-
-This project uses [Poetry](https://python-poetry.org/) for dependency management and packaging.
-
-Make sure you have poetry installed on your machine
-
-  ```sh
-  pip install --upgrade poetry
-  ```
-
-After you clone the repository and update to your new package name you will need to install the package using
-
-  ```sh
-  poetry install
-  ```
-
-(If you do not update the package name you will install a python package called `packagename`.)
-
-To add new dependencies to your package you can use
-
-  ```sh
-  poetry add dependency
-  ```
-
-- Add a development dependency:
-
-  ```sh
-  poetry add --group dev dependency
-  ```
-
-Development dependencies are only needed for development and are not included when installing the package in production. Add development dependencies for things like testing and building docs.
-
-If you are using the package and need these development dependencies you should use
-
-  ```sh
-  poetry install --with dev
-  ```
-
-If you think your versions of packages are out of date you can run
-
-  ```sh
-  poetry update
-  ```
-
-Poetry installs unique copies of your dependencies so you can work on multiple packages without sharing versions of dependencies. Therefore, to work within this ecosystem you must use `poetry run` to run anything, e.g.
-
-Instead of using
-
-  ```sh
-  python
-  ```
-
-You would use
-
-  ```sh
-  poetry run python
-  ```
-
-Instead of using
-
-  ```sh
-  jupyter-lab
-  ```
-
-Use
-
-  ```sh
-  poetry run jupyter-lab
-  ```
-
-For more details, check the [Poetry documentation](https://python-poetry.org/docs/).
-
-## Testing the package
-
-The `Makefile` in this repository enables you to run tests, fix import order, lint the code and check for compliance with `isort`, `black`, `flake8`, `pytest`.
-
-Before you push your updates, run `make` inside the directory and resolve any issues that arise. This repository includes actions that will run these tools on GitHub, and show you if they pass. (See the buttons below).
-
-## Adding documentation
-
-You should click the docs folder and read that README to see instructions on how to build docs.
-
-## Updating the package version and publishing to pypi
-
-The package version is automaticaly found from the `pyproject.toml` file. This means when you are ready to release a new version you only need to follow these steps:
-
-1. Update the version number in the `pyproject.toml` file
-2. Build the distribution using
-
-    ```sh
-    poetry build
-    ```
-
-3. Publish the package to pypi
-
-    ```sh
-    poetry publish
-    ```
-
-You should consider using the industry standard for updating version numbers which is major.minor.patch
-
-- Major version changes indicate breaking changes that may not be backward-compatible.
-- Minor version changes introduce new features in a backward-compatible manner.
-- Patch version changes include bug fixes or small improvements that do not affect compatibility.
-
-For example, if a package is at version 1.2.3, then:
-
-- Increasing the major version to 2.0.0 means changes were introduced that break the API
-- Increasing the minor version to 1.3.0 means new features were added while maintaining compatibility.
-- Increasing the patch version to 1.2.4 means minor bug fixes or tweaks were made without changing functionality.
-
-It is ok to release new versions often.
-
-### Update repository settings
-
-To use the actions and docs that are set up here you will need to update your repository settings. One of them is making sure docs are built from the `gh-pages` branch. You can update this in settings:
-
-![gh-pages settings](docs/images/gh-pages.png)
-
-To make sure that you can update the website automatically, you need to ensure the action has read and write permissions in Settings/Actions:
-
-![gh-pages settings](docs/images/read-write.png)
-
-I've set up dependabot in this repository to automatically update the github actions with the most recent versions. This will run every week. To make use of this you will need to add these repo settings
-
-You should make a branch-ruleset for your main branch. Create a ruleset in the settings as shown below
-
-![gh-pages settings](docs/images/branch-ruleset.png)
-
-You will then need to go into the ruleset and
-
-1. Name the ruleset (I called it main)
-2. Make the ruleset active
-3. Add people who can bypass the ruleset. I suggest you add the admins for the repo and organization
-
-![gh-pages settings](docs/images/ruleset1.png)
-
-Make sure you select these options:
-
-1. Branch targeting criteria: Add the `default` branch
-2. Turn on `Restrict deletions`
-3. Turn on `Require a pull request before merging`
-4. Turn off `Block force pushes`
-5. Turn on `Require status checks to pass`
-
-You should add any github actions you want to be required to have users pull requests be merged. I suggest you add flake8, black (`lint`), and the tests (`build 3.X`).
-
-![gh-pages settings](docs/images/ruleset2.png)
-
-## Setting up the README for your package
-
-Your package must include a README document. You should use this file (`README.md`) as your README document. Your can delete all information above this line, and leave the information below as your README file. You should update the URLs in the badges below to be the URLs for your package on github. i.e. replace `https://github.com/pandoramission/pandora-blank/` with `https://github.com/username/reponame/`.
-
-<a href="https://github.com/pandoramission/pandora-blank/actions/workflows/tests.yml"><img src="https://github.com/pandoramission/pandora-blank/workflows/tests/badge.svg" alt="Test status"/></a> <a href="https://github.com/pandoramission/pandora-blank/actions/workflows/black.yml"><img src="https://github.com/pandoramission/pandora-blank/workflows/black/badge.svg" alt="black status"/></a> <a href="https://github.com/pandoramission/pandora-blank/actions/workflows/flake8.yml"><img src="https://github.com/pandoramission/pandora-blank/workflows/flake8/badge.svg" alt="flake8 status"/></a> [![Generic badge](https://img.shields.io/badge/documentation-live-blue.svg)](https://pandoramission.github.io/pandora-blank/)
-[![PyPI - Version](https://img.shields.io/pypi/v/packagename)](https://pypi.org/project/packagename/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/packagename)](https://pypi.org/project/packagename/)
-
-# Package Name
-
-Include information about your package here.
+Do not store calibration data or any generation scripts here.

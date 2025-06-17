@@ -1,21 +1,23 @@
 [project]
-name = "packagename"
+name = "pandoraref"
 version = "0.1.0"
 description = ""
 authors = [
     {name = "Christina Hedges",email = "christina.l.hedges@nasa.gov"}
 ]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.9,<3.13"
 dependencies = [
     "rich (>=13.9.4,<14.0.0)",
     "numpy (>=1.2)",
     "pandas (>=2.2.3,<3.0.0)",
-    "appdirs (>=1.4.4,<2.0.0)"
+    "appdirs (>=1.4.4,<2.0.0)",
+    "astropy (>=6.0.0)",
+    "pandorasat (>=0.11.0)"
 ]
 
 [tool.poetry]
-packages = [{include = "packagename", from = "src"}]
+packages = [{include = "pandoraref", from = "src"}]
 
 [tool.poetry.group.dev]
 optional = true
@@ -25,15 +27,6 @@ pytest = "^8.3.4"
 black = "^25.1.0"
 isort = "^6.0.0"
 flake8 = "^7.1.2"
-jupyterlab = "^4.3.5"
-mkdocs = "^1.6.1"
-mkdocs-jupyter = "^0.25.1"
-mkdocs-material = "^9.6.5"
-pytkdocs = {version = "^0.16.2", extras = ["numpy-style"]}
-mkdocs-include-markdown-plugin = "^7.1.4"
-mkdocstrings = {version = "^0.28.2", extras = ["python"]}
-jupyter-contrib-nbextensions = "^0.7.0"
-notebook = ">=6.0.0,<7.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
