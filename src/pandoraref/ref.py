@@ -5,6 +5,7 @@ from functools import lru_cache
 # Third-party
 import astropy.units as u
 import numpy as np
+import pandas as pd
 from astropy.constants import c, h
 
 # import pandorasat as ps
@@ -140,7 +141,9 @@ class RefMixins:
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.throughput_file) as hdulist:
             wav_grid, throughput = (
-                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]),
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
+                ),
                 u.Quantity(hdulist[1].data["throughput"]),
             )
         return wav_grid, throughput
@@ -163,7 +166,7 @@ class RefMixins:
         return u.Quantity(
             np.interp(
                 u.Quantity(wavelength, u.micron).value,
-                wav_grid.to(wavelength.unit).value,
+                wav_grid.to(u.micron).value,
                 throughput.value,
             )
         )
@@ -173,7 +176,9 @@ class RefMixins:
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.qe_file) as hdulist:
             wav_grid, qe = (
-                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]),
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
+                ),
                 u.Quantity(hdulist[1].data["qe"]),
             )
         return wav_grid, qe
@@ -196,7 +201,7 @@ class RefMixins:
         return u.Quantity(
             np.interp(
                 u.Quantity(wavelength, u.micron).value,
-                wav_grid.to(wavelength.unit).value,
+                wav_grid.to(u.micron).value,
                 qe.value,
             )
         )
@@ -205,7 +210,7 @@ class RefMixins:
         """
         Get the sensitivity of the detector.
         This is currently calculated from the throughput and QE.
-        In future this is likely to be replaced by an RDP.
+        In future this is likely to be replaced by an RDP of the empirical sensitivity.
 
         Parameters
         ----------
@@ -235,6 +240,27 @@ class RefMixins:
         sensitivity = photon_flux_density / sed
         return sensitivity
 
+    @lru_cache()
+    def _get_vega_data(self):
+        """This helper function ensures that we only have to do the IO of this file once"""
+        df = pd.read_csv(
+            "/Users/chedges/Pandora/repos/pandora-sat/src/pandorasat/data/vega.csv",
+            header=None,
+        )
+        wavelength, spectrum = df.values.T
+        wavelength *= u.angstrom
+        spectrum *= u.erg / u.cm**2 / u.s / u.angstrom
+        return wavelength, spectrum
+
+    def get_zeropoint(self):
+        """Returns the Vega magnitude system zeropoint of the detector."""
+        wavelength, spectrum = self._get_vega_data()
+        sens = self.get_sensitivity(wavelength)
+        zeropoint = np.trapz(spectrum * sens, wavelength) / np.trapz(
+            sens, wavelength
+        )
+        return zeropoint
+
 
 class NIRDAReference(RefMixins):
     """Class for returning paths to the NIRDA reference data files.
@@ -258,7 +284,9 @@ class NIRDAReference(RefMixins):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.pixel_position_file) as hdulist:
             wav_grid, pixel_position = (
-                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]),
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
+                ),
                 u.Quantity(
                     hdulist[1].data["pixel"],
                     hdulist[1].header["TUNIT2"],
@@ -284,12 +312,13 @@ class NIRDAReference(RefMixins):
         return u.Quantity(
             np.interp(
                 u.Quantity(wavelength, u.micron).value,
-                wav_grid.to(wavelength.unit).value,
+                wav_grid.to(u.micron).value,
                 pixel_position.value,
             )
+            * u.pixel
         )
 
-    def get_wavelength(self, pixel):
+    def get_wavelength_position(self, pixel):
         """
         Get the wavelength of a pixel position on the detector.
 
@@ -306,10 +335,11 @@ class NIRDAReference(RefMixins):
         wav_grid, pixel_position = self._get_pixel_position_data()
         return u.Quantity(
             np.interp(
-                pixel.value,
-                pixel_position.to(pixel.unit).value,
+                u.Quantity(pixel, u.pixel).value,
+                pixel_position.value,
                 wav_grid.value,
             )
+            * wav_grid.unit
         )
 
 

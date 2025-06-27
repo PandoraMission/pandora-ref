@@ -47,4 +47,5 @@ def get_logger(name="pandoraref"):
 
 logger = get_logger("pandoraref")
 
+from .dummy import create_dummy_reference_products  # noqa
 from .ref import *  # noqa

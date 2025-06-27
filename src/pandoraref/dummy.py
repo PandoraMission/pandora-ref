@@ -6,7 +6,6 @@ import pandorasat as ps
 from astropy.io import fits
 from astropy.time import Time
 from astropy.wcs import WCS
-import astropy.units as u
 
 from . import PACKAGEDIR
 from .wcs import _read_distortion_file, create_sip, create_wcs
@@ -22,8 +21,6 @@ def create_visda_dummy_bad_pixel_map():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -72,8 +69,6 @@ def create_nirda_dummy_bad_pixel_map():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -120,8 +115,6 @@ def create_visda_dummy_flat():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -152,8 +145,6 @@ def create_nirda_dummy_flat():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -184,8 +175,6 @@ def create_visda_dummy_bias():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -216,8 +205,6 @@ def create_nirda_dummy_bias():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -248,8 +235,6 @@ def create_visda_dummy_dark():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -280,8 +265,6 @@ def create_nirda_dummy_dark():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -310,8 +293,6 @@ def create_visda_dummy_gain():
     """Creates a dummy file that is a placeholder for a dark on the VISDA."""
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -333,8 +314,6 @@ def create_nirda_dummy_gain():
     """Creates a dummy file that is a placeholder for a dark on the VISDA."""
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -357,8 +336,6 @@ def create_visda_dummy_read_noise():
     """Creates a dummy file that is a placeholder for a dark on the VISDA."""
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -380,8 +357,6 @@ def create_nirda_dummy_read_noise():
     """Creates a dummy file that is a placeholder for a dark on the VISDA."""
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -407,8 +382,6 @@ def create_visda_dummy_non_linearity():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -446,8 +419,6 @@ def create_nirda_dummy_non_linearity():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -483,8 +454,6 @@ def create_visda_v0_1_0_wcs():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -506,8 +475,6 @@ def create_nirda_v0_1_0_wcs():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -541,8 +508,6 @@ def create_visda_v0_1_0_sip():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
@@ -576,8 +541,6 @@ def create_nirda_v0_1_0_sip():
 
     hdr0 = fits.Header(
         [
-            ("SIMDATA", True, "simulated data"),
-            ("SCIDATA", False, "science data"),
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
@@ -593,16 +556,6 @@ def create_nirda_v0_1_0_sip():
     return hdulist
 
 
-def create_nirda_v0_1_0_zeropoint():
-    df = pd.read_csv(
-        "/Users/chedges/Pandora/repos/pandora-sat/src/pandorasat/data/vega.csv",
-        header=None,
-    )
-    wavelength, spectrum = df.values.T
-    wavelength *= u.angstrom
-    spectrum *= u.erg / u.cm**2 / u.s / u.angstrom
-
-
 def create_dummy_reference_products(overwrite=True):
     """Populate this package with dummy reference files."""
 
@@ -616,11 +569,17 @@ def create_dummy_reference_products(overwrite=True):
     hdulist = create_visda_dummy_gain()
     hdulist.writeto(f"{PACKAGEDIR}/data/visda/gain.fits", overwrite=overwrite)
     hdulist = create_visda_dummy_read_noise()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/readnoise.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/visda/readnoise.fits", overwrite=overwrite
+    )
     hdulist = create_visda_dummy_bad_pixel_map()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/badpix.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/visda/badpix.fits", overwrite=overwrite
+    )
     hdulist = create_visda_dummy_non_linearity()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/nonlin.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/visda/nonlin.fits", overwrite=overwrite
+    )
     hdulist = create_visda_v0_1_0_sip()
     hdulist.writeto(f"{PACKAGEDIR}/data/visda/sip.fits", overwrite=overwrite)
     hdulist = create_visda_v0_1_0_wcs()
@@ -636,11 +595,17 @@ def create_dummy_reference_products(overwrite=True):
     hdulist = create_nirda_dummy_gain()
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/gain.fits", overwrite=overwrite)
     hdulist = create_nirda_dummy_read_noise()
-    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/readnoise.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/nirda/readnoise.fits", overwrite=overwrite
+    )
     hdulist = create_nirda_dummy_bad_pixel_map()
-    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/badpix.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/nirda/badpix.fits", overwrite=overwrite
+    )
     hdulist = create_nirda_dummy_non_linearity()
-    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/nonlin.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/nirda/nonlin.fits", overwrite=overwrite
+    )
     hdulist = create_nirda_v0_1_0_sip()
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/sip.fits", overwrite=overwrite)
     hdulist = create_nirda_v0_1_0_wcs()

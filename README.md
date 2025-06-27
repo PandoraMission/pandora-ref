@@ -1,4 +1,4 @@
-# Pandora Reference
+# Pandora Reference [WIP]
 
 This package is a repository to hold reference data for the Pandora SmallSat data processing. This repository is **only used to store the current best reference products** for Pandora data processing. Rolling back to previous versions of this package will roll back to previous versions of reference products. All processed products will contain a version number of this package, which links to specific versions of processing files. At any given version number there is a single version of each file.
 
