@@ -66,3 +66,10 @@ def test_get_pixel_position():
     pixel = obj.get_pixel_position(wavelength)
     assert isinstance(pixel, u.Quantity)
     assert len(pixel) == len(wavelength)
+
+
+def test_vega():
+    obj = NIRDAReference()
+    w, s = obj._get_vega_data()
+    assert isinstance(w, u.Quantity)
+    assert isinstance(s, u.Quantity)

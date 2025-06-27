@@ -244,7 +244,7 @@ class RefMixins:
     def _get_vega_data(self):
         """This helper function ensures that we only have to do the IO of this file once"""
         df = pd.read_csv(
-            "/Users/chedges/Pandora/repos/pandora-sat/src/pandorasat/data/vega.csv",
+            f"{PACKAGEDIR}/data/external/vega.csv",
             header=None,
         )
         wavelength, spectrum = df.values.T
