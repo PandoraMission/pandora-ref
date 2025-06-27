@@ -1,4 +1,4 @@
-# Pandora Reference [WIP]
+# Pandora Reference
 
 This package is a repository to hold reference data for the Pandora SmallSat data processing. This repository is **only used to store the current best reference products** for Pandora data processing. Rolling back to previous versions of this package will roll back to previous versions of reference products. All processed products will contain a version number of this package, which links to specific versions of processing files. At any given version number there is a single version of each file.
 
@@ -19,13 +19,7 @@ If you are going to update reference products for Pandora processing you must fo
 4. Replace the file in the `src/pandoraref/data/`.
 5. Where appropriate, update the README for each file.
 6. In this modules `__init__.py` file, ensure that the product name is correct in the loading class. If you have added a new file or changed a name, make sure to update the class.
-7. In this modules `pyproject.py` file update the version number. Follow this convention
-
-- Updating information within this package (e.g. readmes, docstrings): update patch number
-- Updating data within files, but not changing any file structure: update patch number
-- Updating data and changing the file structure (e.g. adding or removing headers or extensions): update minor version number
-- Adding or removing data products entirely: update major version number
-
+7. In this modules `pyproject.py` file update the version number. Follow the rules below.
 8. Update the CHANGELOG for this package.
 
 You may update multiple data products at once, but if you make any changes to this repository you must update the version number of this package.
@@ -40,6 +34,13 @@ Version numbers appear in two places:
 When processing Pandora data, refer to the `pandora-ref` package number that was used when processing, so that your processing is reproducible using the same exact set of reference files.
 
 If a file has a version name `dummy` this means this is a file that is for format definition only, and is not meant to be used in practice. `dummy` files should still be in the correct format, and should have data in them so that they can be applied (e.g. a flat field of 1's, a bias value of 0) but they should not contain any real information or expectations.
+
+Follow this convention when updating the package version number
+
+- Updating information within this package (e.g. readmes, docstrings): update patch number
+- Updating data within files, but not changing any file structure: update patch number
+- Updating data and changing the file structure (e.g. adding or removing headers or extensions): update minor version number
+- Adding or removing data products entirely: update major version number
 
 ## Contents
 
