@@ -58,6 +58,11 @@ def test_get_sensitivity():
         wavelength = np.arange(100, 3000) * u.nm
         sens = obj.get_sensitivity(wavelength)
 
+    assert (
+        NIRDAReference().get_sensitivity(1.5 * u.micron)
+        > 6e14 * u.cm**2 * u.photon / u.erg
+    )
+
 
 def test_get_pixel_position():
     """Test the wcs getting"""

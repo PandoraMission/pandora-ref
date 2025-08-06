@@ -1,3 +1,8 @@
+v0.1.2
+------
+
+- Bugfix halved mirror diameter, mirror diameter is now correct!
+
 v0.1.1
 ------
 

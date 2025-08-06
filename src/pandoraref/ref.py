@@ -225,7 +225,7 @@ class RefMixins:
 
         A_primary = np.pi * ((43.5 * u.cm).to(u.m) / 2) ** 2
         A_secondary = np.pi * ((86 * u.mm).to(u.m) / 2) ** 2
-        mirror_diameter = ((A_primary - A_secondary) / np.pi) ** 0.5
+        mirror_diameter = 2 * ((A_primary - A_secondary) / np.pi) ** 0.5
 
         def photon_energy(wavelength):
             """Converts photon wavelength to energy."""
