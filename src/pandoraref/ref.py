@@ -89,12 +89,20 @@ class RefMixins:
         wcs: astropy.wcs.WCS
             World Coordinate System object
         """
-
+        target_ra = u.Quantity(target_ra, "deg")
+        target_dec = u.Quantity(target_dec, "deg")
+        theta = u.Quantity(theta, "deg")
         hdu = fits.open(self.wcs_file)[0]
         matrix = np.asarray(
             [
-                [np.cos(theta).value, -np.sin(theta).value],
-                [np.sin(theta).value, np.cos(theta).value],
+                [
+                    np.cos(np.deg2rad(theta.value)),
+                    -np.sin(np.deg2rad(theta.value)),
+                ],
+                [
+                    np.sin(np.deg2rad(theta.value)),
+                    np.cos(np.deg2rad(theta.value)),
+                ],
             ]
         )
         hdu.header["CRVAL1"] = target_ra.value
@@ -135,6 +143,54 @@ class RefMixins:
             warnings.simplefilter("ignore")
             sip = WCS(hdr).sip
         return sip
+
+    @lru_cache()
+    def get_flat(self):
+        with fits.open(self.flat_file) as hdulist:
+            flat = hdulist[1].data
+        return flat
+
+    @lru_cache()
+    def get_bad_pixel(self):
+        with fits.open(self.bad_pixel_file) as hdulist:
+            bad_pixel = hdulist[1].data
+        return bad_pixel
+
+    @lru_cache()
+    def _get_nonlin_data(self):
+        """This helper function ensures that we only have to do the IO of this file once"""
+        raise NotImplementedError
+
+    def get_nonlin(self):
+        raise NotImplementedError
+
+    @lru_cache()
+    def get_dark(self):
+        with fits.open(self.dark_file) as hdulist:
+            unit = u.Quantity(f"1 {hdulist[0].header['UNIT']}")
+            value = hdulist[0].header["DARK"]
+        return value * unit
+
+    @lru_cache()
+    def get_readnoise(self):
+        with fits.open(self.readnoise_file) as hdulist:
+            unit = u.Quantity(f"1 {hdulist[0].header['UNIT']}")
+            value = hdulist[0].header["READNS"]
+        return value * unit
+
+    @lru_cache()
+    def get_bias(self):
+        with fits.open(self.bias_file) as hdulist:
+            unit = u.Quantity(f"1 {hdulist[1].header['UNIT']}")
+            value = hdulist[1].data
+        return value * unit
+
+    @lru_cache()
+    def get_gain(self):
+        with fits.open(self.gain_file) as hdulist:
+            unit = u.Quantity(f"1 {hdulist[0].header['UNIT']}")
+            value = hdulist[0].header["GAIN"]
+        return value * unit
 
     @lru_cache()
     def _get_throughput_data(self):
@@ -179,7 +235,7 @@ class RefMixins:
                 u.Quantity(
                     hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
                 ),
-                u.Quantity(hdulist[1].data["qe"]),
+                u.Quantity(hdulist[1].data["qe"], hdulist[1].header["TUNIT2"]),
             )
         return wav_grid, qe
 
@@ -203,7 +259,8 @@ class RefMixins:
                 u.Quantity(wavelength, u.micron).value,
                 wav_grid.to(u.micron).value,
                 qe.value,
-            )
+            ),
+            qe.unit,
         )
 
     def get_sensitivity(self, wavelength):

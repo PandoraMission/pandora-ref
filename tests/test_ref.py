@@ -60,7 +60,7 @@ def test_get_sensitivity():
 
     assert (
         NIRDAReference().get_sensitivity(1.5 * u.micron)
-        > 6e14 * u.cm**2 * u.photon / u.erg
+        > 6e14 * u.cm**2 * u.electron / u.erg
     )
 
 

@@ -1,3 +1,9 @@
+v0.1.3
+------
+
+- Bugfix incorrect errors in some dummy files
+- Added more `get_` functions
+
 v0.1.2
 ------
 

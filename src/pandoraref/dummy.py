@@ -171,7 +171,7 @@ def create_nirda_dummy_flat():
 
 def create_visda_dummy_bias():
     """Creates a dummy file that is a placeholder for a bias on the VISDA."""
-    bias = np.ones((2048, 2048), dtype=np.int16)
+    bias = np.ones((2048, 2048), dtype=np.int16) * 100
 
     hdr0 = fits.Header(
         [
@@ -191,6 +191,7 @@ def create_visda_dummy_bias():
     hdr1 = fits.Header(
         [
             ("EXTNAME", "BIAS", "name of extension"),
+            ("UNIT", "DN", "unit of extension"),
         ]
     )
     hdulist = fits.HDUList(
@@ -201,7 +202,7 @@ def create_visda_dummy_bias():
 
 def create_nirda_dummy_bias():
     """Creates a dummy file that is a placeholder for a bias on the VISDA."""
-    bias = np.ones((2048, 2048), dtype=np.int16)
+    bias = np.ones((2048, 2048), dtype=np.int16) * 6000
 
     hdr0 = fits.Header(
         [
@@ -221,6 +222,7 @@ def create_nirda_dummy_bias():
     hdr1 = fits.Header(
         [
             ("EXTNAME", "BIAS", "name of extension"),
+            ("UNIT", "DN", "unit of extension"),
         ]
     )
     hdulist = fits.HDUList(
@@ -231,8 +233,6 @@ def create_nirda_dummy_bias():
 
 def create_visda_dummy_dark():
     """Creates a dummy file that is a placeholder for a dark on the VISDA."""
-    dark = np.zeros((2048, 2048), dtype=np.int16)
-
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
@@ -241,28 +241,20 @@ def create_visda_dummy_dark():
             ("CREATOR", "Pandora DPC", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
+            ("DARK", 1, "dark rate in electron/second/pixel"),
+            ("UNIT", "electron/second/pixel", "unit of dark rate"),
             (
                 "COMMENT",
                 "This file has been created as a place holder for a RDP",
             ),
         ]
     )
-
-    hdr1 = fits.Header(
-        [
-            ("EXTNAME", "dark", "name of extension"),
-        ]
-    )
-    hdulist = fits.HDUList(
-        [fits.PrimaryHDU(header=hdr0), fits.CompImageHDU(dark, header=hdr1)]
-    )
+    hdulist = fits.HDUList([fits.PrimaryHDU(header=hdr0)])
     return hdulist
 
 
 def create_nirda_dummy_dark():
     """Creates a dummy file that is a placeholder for a dark on the VISDA."""
-    dark = np.zeros((2048, 2048), dtype=np.int16)
-
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
@@ -271,6 +263,8 @@ def create_nirda_dummy_dark():
             ("CREATOR", "Pandora DPC", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
+            ("DARK", 1, "dark rate in electron/second/pixel"),
+            ("UNIT", "electron/second/pixel", "unit of dark rate"),
             (
                 "COMMENT",
                 "This file has been created as a place holder for a RDP",
@@ -278,14 +272,7 @@ def create_nirda_dummy_dark():
         ]
     )
 
-    hdr1 = fits.Header(
-        [
-            ("EXTNAME", "DARK", "name of extension"),
-        ]
-    )
-    hdulist = fits.HDUList(
-        [fits.PrimaryHDU(header=hdr0), fits.CompImageHDU(dark, header=hdr1)]
-    )
+    hdulist = fits.HDUList([fits.PrimaryHDU(header=hdr0)])
     return hdulist
 
 
@@ -299,7 +286,8 @@ def create_visda_dummy_gain():
             ("CREATOR", "Pandora DPC", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
-            ("GAIN", 1, "gain setting in electron/ADU"),
+            ("GAIN", 0.6, "gain setting in electron/ADU"),
+            ("UNIT", "electron/DN", "unit of gain"),
             (
                 "COMMENT",
                 "This file has been created as a place holder for a RDP",
@@ -320,7 +308,8 @@ def create_nirda_dummy_gain():
             ("CREATOR", "Pandora DPC", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
-            ("GAIN", 1, "gain setting in electron/ADU"),
+            ("GAIN", 2.1, "gain setting in electron/ADU"),
+            ("UNIT", "electron/DN", "unit of gain"),
             (
                 "COMMENT",
                 "This file has been created as a place holder for a RDP",
@@ -342,7 +331,8 @@ def create_visda_dummy_read_noise():
             ("CREATOR", "Pandora DPC", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
-            ("READNS", 0, "read noise in electrons"),
+            ("READNS", 1.5, "read noise in electrons per pixel"),
+            ("UNIT", "electron/pixel", "unit of read noise"),
             (
                 "COMMENT",
                 "This file has been created as a place holder for a RDP",
@@ -363,7 +353,8 @@ def create_nirda_dummy_read_noise():
             ("CREATOR", "Pandora DPC", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
-            ("READNS", 0, "read noise in electrons"),
+            ("READNS", 18 / np.sqrt(2), "read noise in electrons per pixel"),
+            ("UNIT", "electron/pixel", "unit of read noise"),
             (
                 "COMMENT",
                 "This file has been created as a place holder for a RDP",
