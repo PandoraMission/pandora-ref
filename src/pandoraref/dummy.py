@@ -1,8 +1,8 @@
 """Module for making dummy files. Use these as a way to set expectations for how files should be structured, if you have no other option."""
 
 # Third-party
+import astropy.units as u
 import numpy as np
-import pandorasat as ps
 from astropy.io import fits
 from astropy.time import Time
 from astropy.wcs import WCS
@@ -441,8 +441,6 @@ def create_nirda_dummy_non_linearity():
 
 
 def create_visda_v0_1_0_wcs():
-    detector = ps.VisibleDetector()
-
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
@@ -455,20 +453,20 @@ def create_visda_v0_1_0_wcs():
     )
 
     hdulist = create_wcs(
-        detector,
-        0,
-        0,
-        0,
-        crpix1=int(detector.naxis1.value // 2),
-        crpix2=int(detector.naxis2.value // 2),
+        target_ra=0,
+        target_dec=0,
+        theta=0,
+        naxis1=2048,
+        naxis2=2048,
+        crpix1=1024,
+        crpix2=1024,
+        pixel_scale=0.78 * u.arcsecond / u.pixel,
     ).to_fits(relax=True)
     hdulist[0].header.extend(hdr0)
     return hdulist
 
 
 def create_nirda_v0_1_0_wcs():
-    detector = ps.NIRDetector()
-
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
@@ -480,26 +478,23 @@ def create_nirda_v0_1_0_wcs():
         ]
     )
     hdulist = create_wcs(
-        detector,
-        0,
-        0,
-        0,
-        crpix1=int(
-            detector.subarray_corner[1] + detector.subarray_size[1] // 2
-        ),
-        crpix2=int(
-            detector.subarray_corner[0] + detector.subarray_size[0] // 2
-        ),
+        target_ra=0,
+        target_dec=0,
+        theta=0,
+        naxis1=2048,
+        naxis2=2048,
+        crpix1=2008,
+        crpix2=1024,
+        pixel_scale=1.19 * u.arcsecond / u.pixel,
     ).to_fits(relax=True)
     hdulist[0].header.extend(hdr0)
     return hdulist
 
 
 def create_visda_v0_1_0_sip():
-    detector = ps.VisibleDetector()
     X, Y, Xp, Yp = _read_distortion_file(
-        detector,
-        f"{PACKAGEDIR}/data/external/fov_distortion.csv",
+        pixel_size=6.5 * u.micron / u.pixel,
+        distortion_file=f"{PACKAGEDIR}/data/external/fov_distortion.csv",
     )
 
     sip = create_sip(X, Y, Xp, Yp, crpix1=1024, crpix2=1024, order=3)
@@ -529,13 +524,12 @@ def create_visda_v0_1_0_sip():
 
 
 def create_nirda_v0_1_0_sip():
-    detector = ps.NIRDetector()
     X, Y, Xp, Yp = _read_distortion_file(
-        detector,
-        f"{PACKAGEDIR}/data/external/fov_distortion.csv",
+        pixel_size=18 * u.micron / u.pixel,
+        distortion_file=f"{PACKAGEDIR}/data/external/fov_distortion.csv",
     )
 
-    sip = create_sip(X, Y, Xp, Yp, crpix1=1024, crpix2=1024, order=3)
+    sip = create_sip(X, Y, Xp, Yp, crpix1=2008, crpix2=1024, order=3)
     wcs = WCS()
     wcs.wcs.ctype = ["RA---TAN-SIP", "DEC--TAN-SIP"]
     hdr0 = wcs.to_fits(relax=True)[0].header
@@ -551,7 +545,7 @@ def create_nirda_v0_1_0_sip():
             ("INSTRMNT", "NIRDA", "instrument"),
             ("CREATOR", "Pandora DPC", "creator of this product"),
             ("VERSION", "v0.1.0", "creator software version"),
-            ("CRPIX1", 1024, "reference pixel in column"),
+            ("CRPIX1", 2008, "reference pixel in column"),
             ("CRPIX2", 1024, "reference pixel in row"),
             ("DATE", Time.now().isot, "creation date"),
         ]
@@ -574,17 +568,11 @@ def create_dummy_reference_products(overwrite=True):
     hdulist = create_visda_dummy_gain()
     hdulist.writeto(f"{PACKAGEDIR}/data/visda/gain.fits", overwrite=overwrite)
     hdulist = create_visda_dummy_read_noise()
-    hdulist.writeto(
-        f"{PACKAGEDIR}/data/visda/readnoise.fits", overwrite=overwrite
-    )
+    hdulist.writeto(f"{PACKAGEDIR}/data/visda/readnoise.fits", overwrite=overwrite)
     hdulist = create_visda_dummy_bad_pixel_map()
-    hdulist.writeto(
-        f"{PACKAGEDIR}/data/visda/badpix.fits", overwrite=overwrite
-    )
+    hdulist.writeto(f"{PACKAGEDIR}/data/visda/badpix.fits", overwrite=overwrite)
     hdulist = create_visda_dummy_non_linearity()
-    hdulist.writeto(
-        f"{PACKAGEDIR}/data/visda/nonlin.fits", overwrite=overwrite
-    )
+    hdulist.writeto(f"{PACKAGEDIR}/data/visda/nonlin.fits", overwrite=overwrite)
     hdulist = create_visda_v0_1_0_sip()
     hdulist.writeto(f"{PACKAGEDIR}/data/visda/sip.fits", overwrite=overwrite)
     hdulist = create_visda_v0_1_0_wcs()
@@ -600,17 +588,11 @@ def create_dummy_reference_products(overwrite=True):
     hdulist = create_nirda_dummy_gain()
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/gain.fits", overwrite=overwrite)
     hdulist = create_nirda_dummy_read_noise()
-    hdulist.writeto(
-        f"{PACKAGEDIR}/data/nirda/readnoise.fits", overwrite=overwrite
-    )
+    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/readnoise.fits", overwrite=overwrite)
     hdulist = create_nirda_dummy_bad_pixel_map()
-    hdulist.writeto(
-        f"{PACKAGEDIR}/data/nirda/badpix.fits", overwrite=overwrite
-    )
+    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/badpix.fits", overwrite=overwrite)
     hdulist = create_nirda_dummy_non_linearity()
-    hdulist.writeto(
-        f"{PACKAGEDIR}/data/nirda/nonlin.fits", overwrite=overwrite
-    )
+    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/nonlin.fits", overwrite=overwrite)
     hdulist = create_nirda_v0_1_0_sip()
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/sip.fits", overwrite=overwrite)
     hdulist = create_nirda_v0_1_0_wcs()

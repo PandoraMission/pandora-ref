@@ -103,12 +103,14 @@ def create_sip(
 
 
 def create_wcs(
-    detector,
     target_ra: u.Quantity,
     target_dec: u.Quantity,
-    theta: u.Quantity = 0 * u.deg,
-    crpix1: int = None,
-    crpix2: int = None,
+    theta: u.Quantity,
+    naxis1: int,
+    naxis2: int,
+    crpix1: int,
+    crpix2: int,
+    pixel_scale: u.Quantity,
     xreflect: bool = True,
     yreflect: bool = False,
 ) -> WCS.wcs:
@@ -116,8 +118,6 @@ def create_wcs(
 
     Parameters:
     -----------
-    detector : pandorasim.Detector
-        The detector to build the WCS for
     target_ra: astropy.units.Quantity
         The target RA in degrees
     target_dec: astropy.units.Quantity
@@ -153,27 +153,23 @@ def create_wcs(
     for idx in range(2):
         for jdx in range(2):
             hdu.header[f"PC{idx + 1}_{jdx + 1}"] = matrix[idx, jdx]
-    hdu.header["CRPIX1"] = (
-        detector.naxis1.value // 2 if crpix1 is None else crpix1
-    )
-    hdu.header["CRPIX2"] = (
-        detector.naxis2.value // 2 if crpix2 is None else crpix2
-    )
+    hdu.header["CRPIX1"] = naxis1 // 2 if crpix1 is None else crpix1
+    hdu.header["CRPIX2"] = naxis2 // 2 if crpix2 is None else crpix2
 
-    hdu.header["NAXIS1"] = detector.naxis1.value
-    hdu.header["NAXIS2"] = detector.naxis2.value
-    hdu.header["CDELT1"] = detector.pixel_scale.to(u.deg / u.pixel).value * (
-        -1
-    ) ** (int(xreflect))
-    hdu.header["CDELT2"] = detector.pixel_scale.to(u.deg / u.pixel).value * (
-        -1
-    ) ** (int(yreflect))
+    hdu.header["NAXIS1"] = naxis1
+    hdu.header["NAXIS2"] = naxis2
+    hdu.header["CDELT1"] = pixel_scale.to(u.deg / u.pixel).value * (-1) ** (
+        int(xreflect)
+    )
+    hdu.header["CDELT2"] = pixel_scale.to(u.deg / u.pixel).value * (-1) ** (
+        int(yreflect)
+    )
 
     wcs = WCS(hdu.header, relax=True)
     return wcs
 
 
-def _read_distortion_file(detector, distortion_file: str):
+def _read_distortion_file(pixel_size: u.Quantity, distortion_file: str):
     """Helper function to read a distortion file from LLNL
 
     This file must be a CSV file that contains a completely "square" grid of pixels
@@ -199,23 +195,23 @@ def _read_distortion_file(detector, distortion_file: str):
     df = pd.read_csv(distortion_file)
     # Square grid of pixels (TRUTH)
     X = (
-        (u.Quantity(np.asarray(df["Parax X"]), "mm") / detector.pixel_size)
+        (u.Quantity(np.asarray(df["Parax X"]), "mm") / pixel_size)
         .to(u.pix)
         .value
     )
     Y = (
-        (u.Quantity(np.asarray(df["Parax Y"]), "mm") / detector.pixel_size)
+        (u.Quantity(np.asarray(df["Parax Y"]), "mm") / pixel_size)
         .to(u.pix)
         .value
     )
     # Distorted pixel positions (DISTORTED)
     Xp = (
-        (u.Quantity(np.asarray(df["Real X"]), "mm") / detector.pixel_size)
+        (u.Quantity(np.asarray(df["Real X"]), "mm") / pixel_size)
         .to(u.pix)
         .value
     )
     Yp = (
-        (u.Quantity(np.asarray(df["Real Y"]), "mm") / detector.pixel_size)
+        (u.Quantity(np.asarray(df["Real Y"]), "mm") / pixel_size)
         .to(u.pix)
         .value
     )

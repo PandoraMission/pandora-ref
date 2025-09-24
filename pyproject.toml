@@ -1,6 +1,6 @@
 [project]
 name = "pandoraref"
-version = "0.1.4"
+version = "0.1.5"
 description = ""
 authors = [
     {name = "Christina Hedges",email = "christina.l.hedges@nasa.gov"}
@@ -13,7 +13,6 @@ dependencies = [
     "pandas (>=2.2.3,<3.0.0)",
     "appdirs (>=1.4.4,<2.0.0)",
     "astropy (>=6.0.0)",
-    "pandorasat (>=0.12.5)"
 ]
 
 [tool.poetry]
