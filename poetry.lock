@@ -679,7 +679,7 @@ files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
-markers = {main = "platform_system == \"Windows\"", dev = "platform_system == \"Windows\" or sys_platform == \"win32\""}
+markers = {main = "platform_system == \"Windows\"", dev = "sys_platform == \"win32\" or platform_system == \"Windows\""}
 
 [[package]]
 name = "comm"
@@ -2834,14 +2834,14 @@ files = [
 
 [[package]]
 name = "pandorasat"
-version = "0.11.0"
+version = "0.12.5"
 description = ""
 optional = false
 python-versions = "<3.13,>=3.9"
 groups = ["main"]
 files = [
-    {file = "pandorasat-0.11.0-py3-none-any.whl", hash = "sha256:456ad308a45f8f51558b1e9777b94cbb12320c0786f4b2f0abd4bcd03d501297"},
-    {file = "pandorasat-0.11.0.tar.gz", hash = "sha256:af589e20c98ddaba10d1d72ec89cd97ac4833dcb2ea33438126d24ce4257dde8"},
+    {file = "pandorasat-0.12.5-py3-none-any.whl", hash = "sha256:8b5e39cd689d151041d664969c7dd2e8325800542a3f3c5613edbcf397a9d163"},
+    {file = "pandorasat-0.12.5.tar.gz", hash = "sha256:b9609d86e48a1b5ede26c3dbb8ca86d930f27be4f3daf495575b9649463056f0"},
 ]
 
 [package.dependencies]
@@ -2852,6 +2852,7 @@ matplotlib = ">=3.8.0"
 numpy = ">=1.26.0"
 openpyxl = ">=3.1.5,<4.0.0"
 pandas = {version = ">=2.2.3,<3.0.0", extras = ["tabulate"]}
+pandoraref = ">=0.1.3"
 pyarrow = "<20.0.0"
 rich = ">=13.0.0"
 scipy = ">=1.11.2"
@@ -4427,4 +4428,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9,<3.13"
-content-hash = "f52dac7636d2501c16442cb76cda929acb929926aa4c47edfae395d262d00a25"
+content-hash = "38ae755022edd28fcf01424b604990bbf66420a3ccbcc83d4fb6841726c3d5c4"
