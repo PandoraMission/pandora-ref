@@ -484,8 +484,12 @@ def create_nirda_v0_1_0_wcs():
         0,
         0,
         0,
-        crpix1=int(detector.subarray_corner[1] + detector.subarray_size[1] // 2),
-        crpix2=int(detector.subarray_corner[0] + detector.subarray_size[0] // 2),
+        crpix1=int(
+            detector.subarray_corner[1] + detector.subarray_size[1] // 2
+        ),
+        crpix2=int(
+            detector.subarray_corner[0] + detector.subarray_size[0] // 2
+        ),
     ).to_fits(relax=True)
     hdulist[0].header.extend(hdr0)
     return hdulist
@@ -570,11 +574,17 @@ def create_dummy_reference_products(overwrite=True):
     hdulist = create_visda_dummy_gain()
     hdulist.writeto(f"{PACKAGEDIR}/data/visda/gain.fits", overwrite=overwrite)
     hdulist = create_visda_dummy_read_noise()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/readnoise.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/visda/readnoise.fits", overwrite=overwrite
+    )
     hdulist = create_visda_dummy_bad_pixel_map()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/badpix.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/visda/badpix.fits", overwrite=overwrite
+    )
     hdulist = create_visda_dummy_non_linearity()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/nonlin.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/visda/nonlin.fits", overwrite=overwrite
+    )
     hdulist = create_visda_v0_1_0_sip()
     hdulist.writeto(f"{PACKAGEDIR}/data/visda/sip.fits", overwrite=overwrite)
     hdulist = create_visda_v0_1_0_wcs()
@@ -590,11 +600,17 @@ def create_dummy_reference_products(overwrite=True):
     hdulist = create_nirda_dummy_gain()
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/gain.fits", overwrite=overwrite)
     hdulist = create_nirda_dummy_read_noise()
-    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/readnoise.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/nirda/readnoise.fits", overwrite=overwrite
+    )
     hdulist = create_nirda_dummy_bad_pixel_map()
-    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/badpix.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/nirda/badpix.fits", overwrite=overwrite
+    )
     hdulist = create_nirda_dummy_non_linearity()
-    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/nonlin.fits", overwrite=overwrite)
+    hdulist.writeto(
+        f"{PACKAGEDIR}/data/nirda/nonlin.fits", overwrite=overwrite
+    )
     hdulist = create_nirda_v0_1_0_sip()
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/sip.fits", overwrite=overwrite)
     hdulist = create_nirda_v0_1_0_wcs()
