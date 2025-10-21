@@ -267,7 +267,7 @@ class RefMixins:
         """
         Get the sensitivity of the detector.
         This is currently calculated from the throughput and QE.
-        In future this is likely to be replaced by an RDP of the empirical sensitivity.
+        This is a theoretical sensitivity and is not "as measured".
 
         Parameters
         ----------
@@ -397,6 +397,49 @@ class NIRDAReference(RefMixins):
                 wav_grid.value,
             )
             * wav_grid.unit
+        )
+
+    @property
+    def spectrum_normalization_file(self):
+        return f"{PACKAGEDIR}/data/{self.name.lower()}/spectrum_normalization.fits"
+
+    @lru_cache()
+    def _get_spectrum_normalization_data(self):
+        """This helper function ensures that we only have to do the IO of this file once"""
+        with fits.open(self.spectrum_normalization_file) as hdulist:
+            wav_grid, sens = (
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
+                ),
+                u.Quantity(
+                    hdulist[1].data["sensitivity"],
+                    hdulist[1].header["TUNIT3"],
+                ),
+            )
+        return wav_grid, sens
+
+    def get_spectrum_normalization(self, wavelength):
+        """
+        Get the quantum efficiency of the detector.
+
+        Parameters
+        ----------
+        wavelength : npt.NDArray
+            Wavelength position in microns as an `astropy.Quantity`
+
+        Returns
+        -------
+        spectrum_normalization : npt.NDArray
+            The normalization to convert between detector units and physical units
+        """
+        wav_grid, sens = self._get_spectrum_normalization_data()
+        return u.Quantity(
+            np.interp(
+                u.Quantity(wavelength, u.micron).value,
+                wav_grid.to(u.micron).value,
+                sens.value,
+            ),
+            sens.unit,
         )
 
 

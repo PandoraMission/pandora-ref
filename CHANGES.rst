@@ -1,3 +1,8 @@
+v0.2.0
+------
+
+- Adding "spectrum normalization" dummy file.
+
 v0.1.3
 ------
 

@@ -73,6 +73,16 @@ def test_get_pixel_position():
     assert len(pixel) == len(wavelength)
 
 
+def test_get_spectrum_normalization():
+    """Test the wcs getting"""
+    obj = NIRDAReference()
+    wavelength = np.arange(0.1, 3) * u.micron
+    sens = obj.get_spectrum_normalization(wavelength)
+    assert isinstance(sens, u.Quantity)
+    assert len(sens) == len(wavelength)
+    assert sens.unit.is_equivalent("cm2 electron / erg")
+
+
 def test_vega():
     obj = NIRDAReference()
     w, s = obj._get_vega_data()
