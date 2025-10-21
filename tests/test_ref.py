@@ -77,10 +77,16 @@ def test_get_spectrum_normalization():
     """Test the wcs getting"""
     obj = NIRDAReference()
     wavelength = np.arange(0.1, 3) * u.micron
-    sens = obj.get_spectrum_normalization(wavelength)
+    sens = obj.get_spectrum_normalization_per_wavelength(wavelength)
     assert isinstance(sens, u.Quantity)
     assert len(sens) == len(wavelength)
     assert sens.unit.is_equivalent("cm2 electron / erg")
+
+    pixel = np.arange(-200, 200) * u.pixel
+    sens = obj.get_spectrum_normalization_per_pixel(pixel)
+    assert isinstance(sens, u.Quantity)
+    assert len(sens) == len(pixel)
+    assert sens.unit.is_equivalent("cm2 Angstrom electron / (erg pix)")
 
 
 def test_vega():

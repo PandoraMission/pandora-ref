@@ -404,7 +404,22 @@ class NIRDAReference(RefMixins):
         return f"{PACKAGEDIR}/data/{self.name.lower()}/spectrum_normalization.fits"
 
     @lru_cache()
-    def _get_spectrum_normalization_data(self):
+    def _get_spectrum_normalization_data_per_pixel(self):
+        """This helper function ensures that we only have to do the IO of this file once"""
+        with fits.open(self.spectrum_normalization_file) as hdulist:
+            wav_grid, sens = (
+                u.Quantity(
+                    hdulist[1].data["pixel"], hdulist[1].header["TUNIT1"]
+                ),
+                u.Quantity(
+                    hdulist[1].data["Sensitivity Per Pixel"],
+                    hdulist[1].header["TUNIT3"],
+                ),
+            )
+        return wav_grid, sens
+
+    @lru_cache()
+    def _get_spectrum_normalization_data_per_wavelength(self):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.spectrum_normalization_file) as hdulist:
             wav_grid, sens = (
@@ -412,13 +427,13 @@ class NIRDAReference(RefMixins):
                     hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
                 ),
                 u.Quantity(
-                    hdulist[1].data["sensitivity"],
-                    hdulist[1].header["TUNIT3"],
+                    hdulist[1].data["Sensitivity Per Wavelength"],
+                    hdulist[1].header["TUNIT4"],
                 ),
             )
         return wav_grid, sens
 
-    def get_spectrum_normalization(self, wavelength):
+    def get_spectrum_normalization_per_wavelength(self, wavelength):
         """
         Get the quantum efficiency of the detector.
 
@@ -432,11 +447,35 @@ class NIRDAReference(RefMixins):
         spectrum_normalization : npt.NDArray
             The normalization to convert between detector units and physical units
         """
-        wav_grid, sens = self._get_spectrum_normalization_data()
+        wav_grid, sens = self._get_spectrum_normalization_data_per_wavelength()
         return u.Quantity(
             np.interp(
                 u.Quantity(wavelength, u.micron).value,
                 wav_grid.to(u.micron).value,
+                sens.value,
+            ),
+            sens.unit,
+        )
+
+    def get_spectrum_normalization_per_pixel(self, pixel):
+        """
+        Get the quantum efficiency of the detector.
+
+        Parameters
+        ----------
+        wavelength : npt.NDArray
+            Wavelength position in microns as an `astropy.Quantity`
+
+        Returns
+        -------
+        spectrum_normalization : npt.NDArray
+            The normalization to convert between detector units and physical units
+        """
+        pix_grid, sens = self._get_spectrum_normalization_data_per_pixel()
+        return u.Quantity(
+            np.interp(
+                u.Quantity(pixel, u.pixel).value,
+                pix_grid.to(u.pixel).value,
                 sens.value,
             ),
             sens.unit,
