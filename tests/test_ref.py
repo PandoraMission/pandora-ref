@@ -9,12 +9,12 @@ from astropy.io import fits
 from astropy.wcs import WCS, Sip
 
 # First-party/Local
-from pandoraref import NIRDAReference, VISDAReference
+from pandoraref import NIRDAReference, VDAReference
 
 
 def test_path_objects():
     """Test we can get all the path back and they all point to fits files"""
-    for name, Ref in zip(["NIRDA", "VISDA"], [NIRDAReference, VISDAReference]):
+    for name, Ref in zip(["NIRDA", "VDA"], [NIRDAReference, VDAReference]):
         keys = [
             name
             for name, value in inspect.getmembers(Ref)
@@ -33,7 +33,7 @@ def test_path_objects():
 
 def test_get_wcs():
     """Test the wcs getting"""
-    for name, Ref in zip(["NIRDA", "VISDA"], [NIRDAReference, VISDAReference]):
+    for name, Ref in zip(["NIRDA", "VDA"], [NIRDAReference, VDAReference]):
         obj = Ref()
         wcs = obj.get_wcs()
         assert isinstance(wcs, WCS)
@@ -41,7 +41,7 @@ def test_get_wcs():
 
 def test_get_sip():
     """Test the wcs getting"""
-    for name, Ref in zip(["NIRDA", "VISDA"], [NIRDAReference, VISDAReference]):
+    for name, Ref in zip(["NIRDA", "VDA"], [NIRDAReference, VDAReference]):
         obj = Ref()
         sip = obj.get_sip()
         assert isinstance(sip, Sip)
@@ -49,7 +49,7 @@ def test_get_sip():
 
 def test_get_sensitivity():
     """Test the wcs getting"""
-    for name, Ref in zip(["NIRDA", "VISDA"], [NIRDAReference, VISDAReference]):
+    for name, Ref in zip(["NIRDA", "VDA"], [NIRDAReference, VDAReference]):
         obj = Ref()
         wavelength = np.arange(0.1, 3) * u.micron
         sens = obj.get_sensitivity(wavelength)
