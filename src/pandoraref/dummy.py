@@ -13,8 +13,8 @@ from .wcs import _read_distortion_file, create_sip, create_wcs
 __all__ = ["create_dummy_reference_products"]
 
 
-def create_visda_dummy_bad_pixel_map():
-    """Creates a dummy file that is a placeholder for a bad pixel map on the VISDA."""
+def create_vda_dummy_bad_pixel_map():
+    """Creates a dummy file that is a placeholder for a bad pixel map on the VDA."""
     quality = np.zeros((2048, 2048), dtype=np.uint16)
     for idx in range(16):
         quality[idx * 10 : (idx + 1) * 10, idx * 10 : (idx + 1) * 10] = 2**idx
@@ -23,8 +23,8 @@ def create_visda_dummy_bad_pixel_map():
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -72,7 +72,7 @@ def create_nirda_dummy_bad_pixel_map():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -109,16 +109,16 @@ def create_nirda_dummy_bad_pixel_map():
     return hdulist
 
 
-def create_visda_dummy_flat():
-    """Creates a dummy file that is a placeholder for a flat on the VISDA."""
+def create_vda_dummy_flat():
+    """Creates a dummy file that is a placeholder for a flat on the VDA."""
     flat = np.ones((2048, 2048), dtype=np.float32)
 
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -140,7 +140,7 @@ def create_visda_dummy_flat():
 
 
 def create_nirda_dummy_flat():
-    """Creates a dummy file that is a placeholder for a flat on the VISDA."""
+    """Creates a dummy file that is a placeholder for a flat on the VDA."""
     flat = np.ones((2048, 2048), dtype=np.float32)
 
     hdr0 = fits.Header(
@@ -148,7 +148,7 @@ def create_nirda_dummy_flat():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -169,16 +169,16 @@ def create_nirda_dummy_flat():
     return hdulist
 
 
-def create_visda_dummy_bias():
-    """Creates a dummy file that is a placeholder for a bias on the VISDA."""
+def create_vda_dummy_bias():
+    """Creates a dummy file that is a placeholder for a bias on the VDA."""
     bias = np.ones((2048, 2048), dtype=np.int16) * 100
 
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -201,7 +201,7 @@ def create_visda_dummy_bias():
 
 
 def create_nirda_dummy_bias():
-    """Creates a dummy file that is a placeholder for a bias on the VISDA."""
+    """Creates a dummy file that is a placeholder for a bias on the VDA."""
     bias = np.ones((2048, 2048), dtype=np.int16) * 6000
 
     hdr0 = fits.Header(
@@ -209,7 +209,7 @@ def create_nirda_dummy_bias():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -231,14 +231,14 @@ def create_nirda_dummy_bias():
     return hdulist
 
 
-def create_visda_dummy_dark():
-    """Creates a dummy file that is a placeholder for a dark on the VISDA."""
+def create_vda_dummy_dark():
+    """Creates a dummy file that is a placeholder for a dark on the VDA."""
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("DARK", 1, "dark rate in electron/second/pixel"),
@@ -254,13 +254,13 @@ def create_visda_dummy_dark():
 
 
 def create_nirda_dummy_dark():
-    """Creates a dummy file that is a placeholder for a dark on the VISDA."""
+    """Creates a dummy file that is a placeholder for a dark on the VDA."""
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("DARK", 1, "dark rate in electron/second/pixel"),
@@ -276,14 +276,14 @@ def create_nirda_dummy_dark():
     return hdulist
 
 
-def create_visda_dummy_gain():
-    """Creates a dummy file that is a placeholder for a dark on the VISDA."""
+def create_vda_dummy_gain():
+    """Creates a dummy file that is a placeholder for a dark on the VDA."""
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("GAIN", 0.6, "gain setting in electron/ADU"),
@@ -299,13 +299,13 @@ def create_visda_dummy_gain():
 
 
 def create_nirda_dummy_gain():
-    """Creates a dummy file that is a placeholder for a dark on the VISDA."""
+    """Creates a dummy file that is a placeholder for a dark on the VDA."""
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("GAIN", 2.1, "gain setting in electron/ADU"),
@@ -321,14 +321,14 @@ def create_nirda_dummy_gain():
     return hdulist
 
 
-def create_visda_dummy_read_noise():
-    """Creates a dummy file that is a placeholder for a dark on the VISDA."""
+def create_vda_dummy_read_noise():
+    """Creates a dummy file that is a placeholder for a dark on the VDA."""
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("READNS", 1.5, "read noise in electrons per pixel"),
@@ -344,13 +344,13 @@ def create_visda_dummy_read_noise():
 
 
 def create_nirda_dummy_read_noise():
-    """Creates a dummy file that is a placeholder for a dark on the VISDA."""
+    """Creates a dummy file that is a placeholder for a dark on the VDA."""
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("READNS", 18 / np.sqrt(2), "read noise in electrons per pixel"),
@@ -366,8 +366,8 @@ def create_nirda_dummy_read_noise():
     return hdulist
 
 
-def create_visda_dummy_non_linearity():
-    """Creates a dummy file that is a placeholder for a non linearity on the VISDA."""
+def create_vda_dummy_non_linearity():
+    """Creates a dummy file that is a placeholder for a non linearity on the VDA."""
     nonlin_ADU = np.linspace(0, 60000, dtype=np.float32)
     nonlin_electrons = np.linspace(0, 60000, dtype=np.float32)
 
@@ -375,8 +375,8 @@ def create_visda_dummy_non_linearity():
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -413,7 +413,7 @@ def create_nirda_dummy_non_linearity():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -440,13 +440,13 @@ def create_nirda_dummy_non_linearity():
     return hdulist
 
 
-def create_visda_v0_1_0_wcs():
+def create_vda_v0_1_0_wcs():
     hdr0 = fits.Header(
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "v.0.1.0", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
         ]
@@ -472,7 +472,7 @@ def create_nirda_v0_1_0_wcs():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
         ]
@@ -491,7 +491,7 @@ def create_nirda_v0_1_0_wcs():
     return hdulist
 
 
-def create_visda_v0_1_0_sip():
+def create_vda_v0_1_0_sip():
     X, Y, Xp, Yp = _read_distortion_file(
         pixel_size=6.5 * u.micron / u.pixel,
         distortion_file=f"{PACKAGEDIR}/data/external/fov_distortion.csv",
@@ -510,8 +510,8 @@ def create_visda_v0_1_0_sip():
         [
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
-            ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("INSTRMNT", "VDA", "instrument"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "v0.1.0", "creator software version"),
             ("CRPIX1", 1024, "reference pixel in column"),
             ("CRPIX2", 1024, "reference pixel in row"),
@@ -543,7 +543,7 @@ def create_nirda_v0_1_0_sip():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            ("CREATOR", "Pandora Mission", "creator of this product"),
             ("VERSION", "v0.1.0", "creator software version"),
             ("CRPIX1", 2008, "reference pixel in column"),
             ("CRPIX2", 1024, "reference pixel in row"),
@@ -558,31 +558,31 @@ def create_nirda_v0_1_0_sip():
 def create_dummy_reference_products(overwrite=True):
     """Populate this package with dummy reference files."""
 
-    # VISDA
-    hdulist = create_visda_dummy_flat()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/flat.fits", overwrite=overwrite)
-    hdulist = create_visda_dummy_bias()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/bias.fits", overwrite=overwrite)
-    hdulist = create_visda_dummy_dark()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/dark.fits", overwrite=overwrite)
-    hdulist = create_visda_dummy_gain()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/gain.fits", overwrite=overwrite)
-    hdulist = create_visda_dummy_read_noise()
+    # VDA
+    hdulist = create_vda_dummy_flat()
+    hdulist.writeto(f"{PACKAGEDIR}/data/vda/flat.fits", overwrite=overwrite)
+    hdulist = create_vda_dummy_bias()
+    hdulist.writeto(f"{PACKAGEDIR}/data/vda/bias.fits", overwrite=overwrite)
+    hdulist = create_vda_dummy_dark()
+    hdulist.writeto(f"{PACKAGEDIR}/data/vda/dark.fits", overwrite=overwrite)
+    hdulist = create_vda_dummy_gain()
+    hdulist.writeto(f"{PACKAGEDIR}/data/vda/gain.fits", overwrite=overwrite)
+    hdulist = create_vda_dummy_read_noise()
     hdulist.writeto(
-        f"{PACKAGEDIR}/data/visda/readnoise.fits", overwrite=overwrite
+        f"{PACKAGEDIR}/data/vda/readnoise.fits", overwrite=overwrite
     )
-    hdulist = create_visda_dummy_bad_pixel_map()
+    hdulist = create_vda_dummy_bad_pixel_map()
     hdulist.writeto(
-        f"{PACKAGEDIR}/data/visda/badpix.fits", overwrite=overwrite
+        f"{PACKAGEDIR}/data/vda/badpix.fits", overwrite=overwrite
     )
-    hdulist = create_visda_dummy_non_linearity()
+    hdulist = create_vda_dummy_non_linearity()
     hdulist.writeto(
-        f"{PACKAGEDIR}/data/visda/nonlin.fits", overwrite=overwrite
+        f"{PACKAGEDIR}/data/vda/nonlin.fits", overwrite=overwrite
     )
-    hdulist = create_visda_v0_1_0_sip()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/sip.fits", overwrite=overwrite)
-    hdulist = create_visda_v0_1_0_wcs()
-    hdulist.writeto(f"{PACKAGEDIR}/data/visda/wcs.fits", overwrite=overwrite)
+    hdulist = create_vda_v0_1_0_sip()
+    hdulist.writeto(f"{PACKAGEDIR}/data/vda/sip.fits", overwrite=overwrite)
+    hdulist = create_vda_v0_1_0_wcs()
+    hdulist.writeto(f"{PACKAGEDIR}/data/vda/wcs.fits", overwrite=overwrite)
 
     # NIRDA
     hdulist = create_nirda_dummy_flat()

@@ -1,3 +1,8 @@
+v0.3.0
+------
+- changed references to VISDA to VDA
+- changed creator and LICENSE from Pandora DPC to Pandora Mission
+
 v0.2.0
 ------
 

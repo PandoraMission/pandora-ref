@@ -14,7 +14,7 @@ from astropy.wcs import WCS
 
 from . import PACKAGEDIR
 
-__all__ = ["NIRDAReference", "VISDAReference"]
+__all__ = ["NIRDAReference", "VDAReference"]
 
 
 class RefMixins:
@@ -482,15 +482,15 @@ class NIRDAReference(RefMixins):
         )
 
 
-class VISDAReference(RefMixins):
-    """Class for returning paths to the VISDA reference data files.
+class VDAReference(RefMixins):
+    """Class for returning paths to the VDA reference data files.
 
     This class can only load objects or give file paths to objects that exist in the package. It can not make new objects.
     """
 
     @property
     def name(self):
-        return "VISDA"
+        return "VDA"
 
     def __repr__(self):
-        return "VISDAReference Object"
+        return "VDAReference Object"
