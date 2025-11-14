@@ -5,7 +5,7 @@ PYMODULE:=src
 TESTS:=tests
 
 # Run all the checks which do not change files
-all: isort black flake8 pytest
+all: isort black flake8 pytest updatetable
 
 # Run the unit tests using `pytest`
 pytest:
@@ -26,3 +26,6 @@ isort:
 # Make the dummy files
 dummy:
 	$(CMD) python -c "import pandoraref;pandoraref.create_dummy_reference_products()"
+
+updatetable:
+	$(CMD) python scripts/update_readme.py

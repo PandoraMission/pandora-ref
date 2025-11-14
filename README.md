@@ -53,11 +53,11 @@ For any given version number this package will have a single file for at least t
 - Read noise estimates
 - Bad pixel map
 - Non linearity curve
-- PSF model
 - WCS parameters
 - WCS distortion
 - Quantum Efficiency
 - Throughput
+- PRF Model
 
 For NIRDA only there will be a single file for
 
@@ -125,3 +125,53 @@ This package is to
 3. Hold functions to return versions of RDPs under specific conditions. For example, a function to give the WCS RDP given an expected pointing.
 
 Do not store calibration data or any generation scripts here.
+
+## Expected Header Keywords
+
+The following header keywords are expected at minimum inside files submitted to this package in the primary header:
+
+- `TELESCOP`: This should be the telescope, which should always be NASA Pandora. Example:  "'NASA Pandora'       / telescope"
+- `CAMERAID`: This is the ID of the instrument as used in the flight software, either the Panda PCO camera or the Near Infra Red camera. Example:  "'PcoCam  '           / ID of camera used in acquisition"
+- `INSTRMNT`: This is the name of the instrument. Example:  "'VISDA   '           / instrument"
+- `CREATOR`: This should be the software that created the file. Example:  "'Pandora DPC Software' / Software that created this file"
+- `AUTHOR`: This should be the human or group that made the file. Example:  "'Christina Hedges'   / Person or group that created this file"
+- `DATASRC`: This should show where the data that made the product has come from. This could be `DUMMY`, `THEORETICAL`, `SIMULATION`, `VENDOR`, `TVAC`, `COMMISSIONING`, `SCIENCE` or another relevant option.
+- `VERSION`: This is the version number you pick for this file. This could be any string, and does not have to follow on from previous versions. Example:  "'dummy   '           / creator software version"
+- `DATE`: This should be the ISOT date that the file was created. Example:  "'2025-11-14T15:53:06.035' / creation date"
+
+# Files included
+
+Below is a table of the contents of `pandoraref`. This table is updated automatically.
+
+<!-- BEGIN AUTO TABLE -->
+
+|    | Instrument   | File Name                   | File Version   | File Source   | File Creator         | File Author      | File Date   | File Size   |
+|---:|:-------------|:----------------------------|:---------------|:--------------|:---------------------|:-----------------|:------------|:------------|
+|  0 | NIRDA        | bad_pixel_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 98.44 KB    |
+|  1 | NIRDA        | bias_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 90.00 KB    |
+|  2 | NIRDA        | dark_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+|  3 | NIRDA        | flat_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 165.94 KB   |
+|  4 | NIRDA        | gain_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+|  5 | NIRDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |
+|  6 | NIRDA        | pixel_position_file         | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 30.94 KB    |
+|  7 | NIRDA        | prf_file                    | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.52 MB     |
+|  8 | NIRDA        | qe_file                     | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 36.56 KB    |
+|  9 | NIRDA        | readnoise_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+| 10 | NIRDA        | sip_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 5.62 KB     |
+| 11 | NIRDA        | spectrum_normalization_file | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 56.25 KB    |
+| 12 | NIRDA        | throughput_file             | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 95.62 KB    |
+| 13 | NIRDA        | wcs_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+| 14 | VISDA        | bad_pixel_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 98.44 KB    |
+| 15 | VISDA        | bias_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 90.00 KB    |
+| 16 | VISDA        | dark_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+| 17 | VISDA        | flat_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 165.94 KB   |
+| 18 | VISDA        | gain_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+| 19 | VISDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |
+| 20 | VISDA        | prf_file                    | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 1.67 MB     |
+| 21 | VISDA        | qe_file                     | v0.1.0         | VENDOR        | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |
+| 22 | VISDA        | readnoise_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+| 23 | VISDA        | sip_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 5.62 KB     |
+| 24 | VISDA        | throughput_file             | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 95.62 KB    |
+| 25 | VISDA        | wcs_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+
+<!-- END AUTO TABLE -->
