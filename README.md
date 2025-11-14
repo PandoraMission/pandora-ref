@@ -126,9 +126,22 @@ This package is to
 
 Do not store calibration data or any generation scripts here.
 
-## File Contents
+## Expected Header Keywords
 
-Below is a table of the contents of `pandoraref`.
+The following header keywords are expected at minimum inside files submitted to this package in the primary header:
+
+- `TELESCOP`: This should be the telescope, which should always be NASA Pandora. Example:  "'NASA Pandora'       / telescope"
+- `CAMERAID`: This is the ID of the instrument as used in the flight software, either the Panda PCO camera or the Near Infra Red camera. Example:  "'PcoCam  '           / ID of camera used in acquisition"
+- `INSTRMNT`: This is the name of the instrument. Example:  "'VISDA   '           / instrument"
+- `CREATOR`: This should be the software that created the file. Example:  "'Pandora DPC Software' / Software that created this file"
+- `AUTHOR`: This should be the human or group that made the file. Example:  "'Christina Hedges'   / Person or group that created this file"
+- `DATASRC`: This should show where the data that made the product has come from. This could be `DUMMY`, `THEORETICAL`, `SIMULATION`, `VENDOR`, `TVAC`, `COMMISSIONING`, `SCIENCE` or another relevant option.
+- `VERSION`: This is the version number you pick for this file. This could be any string, and does not have to follow on from previous versions. Example:  "'dummy   '           / creator software version"
+- `DATE`: This should be the ISOT date that the file was created. Example:  "'2025-11-14T15:53:06.035' / creation date"
+
+# Files included
+
+Below is a table of the contents of `pandoraref`. This table is updated automatically.
 
 <!-- BEGIN AUTO TABLE -->
 
