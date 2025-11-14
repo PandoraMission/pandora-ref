@@ -26,3 +26,6 @@ isort:
 # Make the dummy files
 dummy:
 	$(CMD) python -c "import pandoraref;pandoraref.create_dummy_reference_products()"
+
+updatetable:
+	$(CMD) python scripts/update_readme.py
