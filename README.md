@@ -142,12 +142,12 @@ Below is a table of the contents of `pandoraref`.
 |  5 | NIRDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |
 |  6 | NIRDA        | pixel_position_file         | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 30.94 KB    |
 |  7 | NIRDA        | prf_file                    | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.52 MB     |
-|  8 | NIRDA        | qe_file                     | v0.1.0         | -             | Pandora DPC          | -                | 2025-08-06  | 36.56 KB    |
+|  8 | NIRDA        | qe_file                     | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 36.56 KB    |
 |  9 | NIRDA        | readnoise_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
-| 10 | NIRDA        | sip_file                    | v0.1.0         | -             | Pandora DPC          | -                | 2025-11-14  | 5.62 KB     |
+| 10 | NIRDA        | sip_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 5.62 KB     |
 | 11 | NIRDA        | spectrum_normalization_file | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 56.25 KB    |
-| 12 | NIRDA        | throughput_file             | v0.1.0         | -             | Pandora DPC          | -                | 2025-06-17  | 95.62 KB    |
-| 13 | NIRDA        | wcs_file                    | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
+| 12 | NIRDA        | throughput_file             | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 95.62 KB    |
+| 13 | NIRDA        | wcs_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
 | 14 | VISDA        | bad_pixel_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 98.44 KB    |
 | 15 | VISDA        | bias_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 90.00 KB    |
 | 16 | VISDA        | dark_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
@@ -155,10 +155,10 @@ Below is a table of the contents of `pandoraref`.
 | 18 | VISDA        | gain_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
 | 19 | VISDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |
 | 20 | VISDA        | prf_file                    | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 1.67 MB     |
-| 21 | VISDA        | qe_file                     | v0.1.0         | -             | Pandora DPC          | -                | 2025-08-06  | 8.44 KB     |
+| 21 | VISDA        | qe_file                     | v0.1.0         | VENDOR        | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |
 | 22 | VISDA        | readnoise_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
-| 23 | VISDA        | sip_file                    | v0.1.0         | -             | Pandora DPC          | -                | 2025-11-14  | 5.62 KB     |
-| 24 | VISDA        | throughput_file             | v0.1.0         | -             | Pandora DPC          | -                | 2025-06-17  | 95.62 KB    |
-| 25 | VISDA        | wcs_file                    | v.0.1.0        | -             | Pandora DPC          | -                | 2025-11-14  | 2.81 KB     |
+| 23 | VISDA        | sip_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 5.62 KB     |
+| 24 | VISDA        | throughput_file             | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 95.62 KB    |
+| 25 | VISDA        | wcs_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
 
 <!-- END AUTO TABLE -->
