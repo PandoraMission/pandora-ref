@@ -53,11 +53,11 @@ For any given version number this package will have a single file for at least t
 - Read noise estimates
 - Bad pixel map
 - Non linearity curve
-- PSF model
 - WCS parameters
 - WCS distortion
 - Quantum Efficiency
 - Throughput
+- PRF Model
 
 For NIRDA only there will be a single file for
 
