@@ -10,7 +10,7 @@ readme = readme_path.read_text()
 
 df = get_file_info()
 
-block = f"{START}\n\n{df.to_markdown()}\n\n{END}"
+block = f"{START}\n\n{df.to_markdown(index=False)}\n\n{END}"
 
 # If the block exists, replace it — otherwise append it at the end
 if START in readme and END in readme:
