@@ -64,6 +64,10 @@ class RefMixins:
     def throughput_file(self):
         return f"{PACKAGEDIR}/data/{self.name.lower()}/throughput.fits"
 
+    @property
+    def prf_file(self):
+        return f"{PACKAGEDIR}/data/{self.name.lower()}/prf.fits"
+
     def get_wcs(
         self,
         target_ra: u.Quantity = 0 * u.deg,
@@ -342,11 +346,11 @@ class NIRDAReference(RefMixins):
         with fits.open(self.pixel_position_file) as hdulist:
             wav_grid, pixel_position = (
                 u.Quantity(
-                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
                 ),
                 u.Quantity(
                     hdulist[1].data["pixel"],
-                    hdulist[1].header["TUNIT2"],
+                    hdulist[1].header["TUNIT1"],
                 ),
             )
         return wav_grid, pixel_position
@@ -407,7 +411,7 @@ class NIRDAReference(RefMixins):
     def _get_spectrum_normalization_data_per_pixel(self):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.spectrum_normalization_file) as hdulist:
-            wav_grid, sens = (
+            pix_grid, sens = (
                 u.Quantity(
                     hdulist[1].data["pixel"], hdulist[1].header["TUNIT1"]
                 ),
@@ -416,7 +420,7 @@ class NIRDAReference(RefMixins):
                     hdulist[1].header["TUNIT3"],
                 ),
             )
-        return wav_grid, sens
+        return pix_grid, sens
 
     @lru_cache()
     def _get_spectrum_normalization_data_per_wavelength(self):

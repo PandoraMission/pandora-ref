@@ -24,7 +24,17 @@ def create_visda_dummy_bad_pixel_map():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -72,7 +82,17 @@ def create_nirda_dummy_bad_pixel_map():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -118,7 +138,17 @@ def create_visda_dummy_flat():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -148,7 +178,17 @@ def create_nirda_dummy_flat():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -178,7 +218,17 @@ def create_visda_dummy_bias():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -209,7 +259,17 @@ def create_nirda_dummy_bias():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -238,7 +298,17 @@ def create_visda_dummy_dark():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("DARK", 1, "dark rate in electron/second/pixel"),
@@ -260,7 +330,17 @@ def create_nirda_dummy_dark():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("DARK", 1, "dark rate in electron/second/pixel"),
@@ -283,7 +363,17 @@ def create_visda_dummy_gain():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("GAIN", 0.6, "gain setting in electron/ADU"),
@@ -305,7 +395,17 @@ def create_nirda_dummy_gain():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("GAIN", 2.1, "gain setting in electron/ADU"),
@@ -328,7 +428,17 @@ def create_visda_dummy_read_noise():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("READNS", 1.5, "read noise in electrons per pixel"),
@@ -350,7 +460,17 @@ def create_nirda_dummy_read_noise():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             ("READNS", 18 / np.sqrt(2), "read noise in electrons per pixel"),
@@ -376,7 +496,17 @@ def create_visda_dummy_non_linearity():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -413,7 +543,17 @@ def create_nirda_dummy_non_linearity():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "DUMMY", ""),
             ("VERSION", "dummy", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
             (
@@ -446,8 +586,18 @@ def create_visda_v0_1_0_wcs():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
-            ("VERSION", "v.0.1.0", "creator software version"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "SIMULATION", ""),
+            ("VERSION", "v0.1.0", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
         ]
     )
@@ -472,8 +622,18 @@ def create_nirda_v0_1_0_wcs():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
-            ("VERSION", "dummy", "creator software version"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "SIMULATION", ""),
+            ("VERSION", "v0.1.0", "creator software version"),
             ("DATE", Time.now().isot, "creation date"),
         ]
     )
@@ -511,7 +671,17 @@ def create_visda_v0_1_0_sip():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "PcoCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "VISDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "SIMULATION", ""),
             ("VERSION", "v0.1.0", "creator software version"),
             ("CRPIX1", 1024, "reference pixel in column"),
             ("CRPIX2", 1024, "reference pixel in row"),
@@ -520,6 +690,92 @@ def create_visda_v0_1_0_sip():
     )
     # add new headers
     hdulist[0].header.extend(hdr0)
+    return hdulist
+
+
+def create_nirda_dummy_qe():
+    wavelength = np.linspace(0.5, 3, 1000) * u.micron
+    wavelength = np.atleast_1d(wavelength)
+    sw_coeffs = np.array([0.65830, -0.05668, 0.25580, -0.08350])
+    sw_exponential = 100.0
+    sw_wavecut_red = 1.69  # changed from 2.38 for Pandora
+    sw_wavecut_blue = 0.85  # new for Pandora
+    with np.errstate(invalid="ignore", over="ignore"):
+        sw_qe = (
+            sw_coeffs[0]
+            + sw_coeffs[1] * wavelength.to(u.micron).value
+            + sw_coeffs[2] * wavelength.to(u.micron).value ** 2
+            + sw_coeffs[3] * wavelength.to(u.micron).value ** 3
+        )
+
+        sw_qe = np.where(
+            wavelength.to(u.micron).value > sw_wavecut_red,
+            sw_qe
+            * np.exp(
+                (sw_wavecut_red - wavelength.to(u.micron).value)
+                * sw_exponential
+            ),
+            sw_qe,
+        )
+
+        sw_qe = np.where(
+            wavelength.to(u.micron).value < sw_wavecut_blue,
+            sw_qe
+            * np.exp(
+                -(sw_wavecut_blue - wavelength.to(u.micron).value)
+                * (sw_exponential / 1.5)
+            ),
+            sw_qe,
+        )
+    sw_qe[sw_qe < 1e-5] = 0
+    hdr0 = fits.Header(
+        [
+            ("TELESCOP", "NASA Pandora", "telescope"),
+            ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
+            ("INSTRMNT", "NIRDA", "instrument"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "THEORETICAL", ""),
+            ("VERSION", "v0.1.0", "creator software version"),
+            ("DATE", Time.now().isot, "creation date"),
+        ]
+    )
+
+    hdr1 = fits.Header(
+        [
+            ("EXTNAME", "QUANTUM EFFICIENCY", "name of extension"),
+        ]
+    )
+    hdulist = fits.HDUList(
+        [
+            fits.PrimaryHDU(header=hdr0),
+            fits.TableHDU.from_columns(
+                [
+                    fits.Column(
+                        name="Wavelength",
+                        array=wavelength.value,
+                        format="E",
+                        unit="micron",
+                    ),
+                    fits.Column(
+                        name="QE",
+                        array=sw_qe,
+                        unit="electron / photon",
+                        format="E",
+                    ),
+                ],
+                header=hdr1,
+            ),
+        ]
+    )
     return hdulist
 
 
@@ -543,7 +799,17 @@ def create_nirda_v0_1_0_sip():
             ("TELESCOP", "NASA Pandora", "telescope"),
             ("CAMERAID", "H2rgCam", "ID of camera used in acquisition"),
             ("INSTRMNT", "NIRDA", "instrument"),
-            ("CREATOR", "Pandora DPC", "creator of this product"),
+            (
+                "CREATOR",
+                "Pandora DPC Software",
+                "Software that created this file",
+            ),
+            (
+                "AUTHOR",
+                "Christina Hedges",
+                "Person or group that created this file",
+            ),
+            ("DATASRC", "SIMULATION", ""),
             ("VERSION", "v0.1.0", "creator software version"),
             ("CRPIX1", 2008, "reference pixel in column"),
             ("CRPIX2", 1024, "reference pixel in row"),
@@ -609,3 +875,5 @@ def create_dummy_reference_products(overwrite=True):
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/sip.fits", overwrite=overwrite)
     hdulist = create_nirda_v0_1_0_wcs()
     hdulist.writeto(f"{PACKAGEDIR}/data/nirda/wcs.fits", overwrite=overwrite)
+    hdulist = create_nirda_dummy_qe()
+    hdulist.writeto(f"{PACKAGEDIR}/data/nirda/qe.fits", overwrite=overwrite)
