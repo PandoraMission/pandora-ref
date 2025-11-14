@@ -25,8 +25,8 @@ jobs:
           poetry install --with dev
 
       - name: Update README
-        run: python scripts/update_readme.py
-
+        run: make updatetable
+        
       - name: Commit README
         run: |
           git config user.name "github-actions"
