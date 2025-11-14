@@ -1,3 +1,8 @@
+v0.x.x
+------
+
+- Updated visda readnoise from dummy file to real file based on ground TVAC observations.
+
 v0.2.0
 ------
 
