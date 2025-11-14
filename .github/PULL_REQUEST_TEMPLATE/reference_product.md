@@ -21,6 +21,7 @@ List all reference files that were added, removed, or modified.
 - [ ] Verified headers, extensions, and metadata are consistent (if not state why in summary)
 - [ ] Verified new file(s) has new version number  
 - [ ] Verified filenames follow convention  
+- [ ] Verified new files do not greatly increase file size (discuss below if they do increase file size.)
 - [ ] Verified `pyproject.toml` version incremented correctly  
 - [ ] Verified CHANGELOG updated  
 
