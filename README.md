@@ -158,7 +158,7 @@ Below is a table of the contents of `pandoraref`. This table is updated automati
 | NIRDA        | qe_file                     | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 36.56 KB    |
 | NIRDA        | readnoise_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
 | NIRDA        | sip_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 5.62 KB     |
-| NIRDA        | spectrum_normalization_file | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 56.25 KB    |
+| NIRDA        | spectrum_normalization_file | dummy          | -             | Pandora DPC          | -                | 2025-12-02  | 19.69 KB    |
 | NIRDA        | throughput_file             | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 95.62 KB    |
 | NIRDA        | wcs_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 2.81 KB     |
 | VISDA        | bad_pixel_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2025-11-14  | 98.44 KB    |

@@ -74,6 +74,8 @@ class RefMixins:
         target_dec: u.Quantity = 0 * u.deg,
         theta: u.Quantity = 0 * u.deg,
         distortion=True,
+        xreflect=False,
+        yreflect=False,
     ):
         """Get the World Coordinate System for a detector as an astropy.wcs.WCS object, given pointing parameters.
         This method only updates the CRVAL and PC parameters, the rest of the WCS is set by reference products
@@ -87,6 +89,10 @@ class RefMixins:
             The target Dec in degrees
         theta: astropy.units.Quantity
             The observatory angle in degrees
+        xreflect: bool
+            Whether to reflect the X dimension
+        yreflect: bool
+            Whether to reflect the Y dimension
 
         Returns:
         --------
@@ -130,6 +136,12 @@ class RefMixins:
             hdu.header.extend(cards)
             hdu.header["CTYPE1"] = "RA---TAN-SIP"
             hdu.header["CTYPE2"] = "DEC--TAN-SIP"
+            hdu.header["CDELT1"] = hdu.header["CDELT1"] * (-1) ** (
+                int(xreflect)
+            )
+            hdu.header["CDELT2"] = hdu.header["CDELT2"] * (-1) ** (
+                int(yreflect)
+            )
 
         with warnings.catch_warnings():
             # The warning here is because this is a WCS with no data associated
