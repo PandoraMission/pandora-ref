@@ -74,6 +74,8 @@ class RefMixins:
         target_dec: u.Quantity = 0 * u.deg,
         theta: u.Quantity = 0 * u.deg,
         distortion=True,
+        rareflect=False,
+        decreflect=False,
         xreflect=False,
         yreflect=False,
     ):
@@ -89,10 +91,14 @@ class RefMixins:
             The target Dec in degrees
         theta: astropy.units.Quantity
             The observatory angle in degrees
+        rareflect: bool
+            Whether to reflect the RA dimension. This changes whether RA goes left to right or right to left.
+        decreflect: bool
+            Whether to reflect the Dec dimension. This changes whether Dec goes bottom to top or top to bottom.
         xreflect: bool
-            Whether to reflect the X dimension
+            Whether to reflect the x (column) dimension.
         yreflect: bool
-            Whether to reflect the Y dimension
+            Whether to reflect the y (row) dimension.
 
         Returns:
         --------
@@ -136,8 +142,24 @@ class RefMixins:
             hdu.header.extend(cards)
             hdu.header["CTYPE1"] = "RA---TAN-SIP"
             hdu.header["CTYPE2"] = "DEC--TAN-SIP"
-        hdu.header["CDELT1"] = float(hdu.header["CDELT1"]) * (-1) ** (int(xreflect))
-        hdu.header["CDELT2"] = float(hdu.header["CDELT2"]) * (-1) ** (int(yreflect))
+        hdu.header["CDELT1"] = float(hdu.header["CDELT1"]) * (-1) ** (
+            int(rareflect)
+        )
+        hdu.header["CDELT2"] = float(hdu.header["CDELT2"]) * (-1) ** (
+            int(decreflect)
+        )
+        R = np.asarray(
+            [
+                [hdu.header["PC1_1"], hdu.header["PC1_2"]],
+                [hdu.header["PC2_1"], hdu.header["PC2_2"]],
+            ]
+        )
+        R = R.dot(np.asarray([[1, 0], [0, (-1) ** (int(xreflect))]]))
+        R = R.dot(np.asarray([[(-1) ** (int(yreflect)), 0], [0, 1]]))
+        hdu.header["PC1_1"] = R[0, 0]
+        hdu.header["PC1_2"] = R[0, 1]
+        hdu.header["PC2_1"] = R[1, 0]
+        hdu.header["PC2_2"] = R[1, 1]
 
         with warnings.catch_warnings():
             # The warning here is because this is a WCS with no data associated
@@ -209,7 +231,9 @@ class RefMixins:
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.throughput_file) as hdulist:
             wav_grid, throughput = (
-                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]),
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
+                ),
                 u.Quantity(hdulist[1].data["throughput"]),
             )
         return wav_grid, throughput
@@ -242,7 +266,9 @@ class RefMixins:
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.qe_file) as hdulist:
             wav_grid, qe = (
-                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]),
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
+                ),
                 u.Quantity(hdulist[1].data["qe"], hdulist[1].header["TUNIT2"]),
             )
         return wav_grid, qe
@@ -321,7 +347,9 @@ class RefMixins:
         """Returns the Vega magnitude system zeropoint of the detector."""
         wavelength, spectrum = self._get_vega_data()
         sens = self.get_sensitivity(wavelength)
-        zeropoint = np.trapz(spectrum * sens, wavelength) / np.trapz(sens, wavelength)
+        zeropoint = np.trapz(spectrum * sens, wavelength) / np.trapz(
+            sens, wavelength
+        )
         return zeropoint
 
 
@@ -347,7 +375,9 @@ class NIRDAReference(RefMixins):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.pixel_position_file) as hdulist:
             wav_grid, pixel_position = (
-                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]),
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
+                ),
                 u.Quantity(
                     hdulist[1].data["pixel"],
                     hdulist[1].header["TUNIT1"],
@@ -412,7 +442,9 @@ class NIRDAReference(RefMixins):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.spectrum_normalization_file) as hdulist:
             pix_grid, sens = (
-                u.Quantity(hdulist[1].data["pixel"], hdulist[1].header["TUNIT1"]),
+                u.Quantity(
+                    hdulist[1].data["pixel"], hdulist[1].header["TUNIT1"]
+                ),
                 u.Quantity(
                     hdulist[1].data["Sensitivity Per Pixel"],
                     hdulist[1].header["TUNIT3"],
@@ -425,7 +457,9 @@ class NIRDAReference(RefMixins):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.spectrum_normalization_file) as hdulist:
             wav_grid, sens = (
-                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]),
+                u.Quantity(
+                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
+                ),
                 u.Quantity(
                     hdulist[1].data["Sensitivity Per Wavelength"],
                     hdulist[1].header["TUNIT4"],
