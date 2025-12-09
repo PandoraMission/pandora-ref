@@ -1,3 +1,8 @@
+v0.3.0
+------
+
+- Updated nirda bad pixel map (badpix) from dummy file to real.
+
 v0.2.0
 ------
 
