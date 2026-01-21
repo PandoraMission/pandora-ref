@@ -1,3 +1,8 @@
+vx.x.x
+------
+
+- Updated the VDA bad pixel map from a dummy file to one based on commissioning data.
+
 v0.2.0
 ------
 
