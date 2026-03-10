@@ -144,8 +144,8 @@ def create_wcs(
     hdu.header["CTYPE2"] = "DEC--TAN"
     matrix = np.asarray(
         [
-            [np.cos(theta).value, -np.sin(theta).value],
-            [np.sin(theta).value, np.cos(theta).value],
+            [np.cos(theta.to(u.rad).value), -np.sin(theta.to(u.rad).value)],
+            [np.sin(theta.to(u.rad).value), np.cos(theta.to(u.rad).value)],
         ]
     )
     hdu.header["CRVAL1"] = target_ra.value

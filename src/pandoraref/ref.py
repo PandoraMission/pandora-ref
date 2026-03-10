@@ -142,12 +142,8 @@ class RefMixins:
             hdu.header.extend(cards)
             hdu.header["CTYPE1"] = "RA---TAN-SIP"
             hdu.header["CTYPE2"] = "DEC--TAN-SIP"
-        hdu.header["CDELT1"] = float(hdu.header["CDELT1"]) * (-1) ** (
-            int(rareflect)
-        )
-        hdu.header["CDELT2"] = float(hdu.header["CDELT2"]) * (-1) ** (
-            int(decreflect)
-        )
+        hdu.header["CDELT1"] = float(hdu.header["CDELT1"]) * (-1) ** (int(rareflect))
+        hdu.header["CDELT2"] = float(hdu.header["CDELT2"]) * (-1) ** (int(decreflect))
         R = np.asarray(
             [
                 [hdu.header["PC1_1"], hdu.header["PC1_2"]],
@@ -220,6 +216,13 @@ class RefMixins:
         return value * unit
 
     @lru_cache()
+    def get_bias_0d(self):
+        with fits.open(self.bias_0d_file) as hdulist:
+            unit = u.Quantity(f"1 {hdulist[1].header['TUNIT1']}".lower())
+            value = hdulist[1].data[0][0]
+        return value * unit
+
+    @lru_cache()
     def get_gain(self):
         with fits.open(self.gain_file) as hdulist:
             unit = u.Quantity(f"1 {hdulist[0].header['UNIT']}")
@@ -231,9 +234,7 @@ class RefMixins:
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.throughput_file) as hdulist:
             wav_grid, throughput = (
-                u.Quantity(
-                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
-                ),
+                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]),
                 u.Quantity(hdulist[1].data["throughput"]),
             )
         return wav_grid, throughput
@@ -266,9 +267,7 @@ class RefMixins:
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.qe_file) as hdulist:
             wav_grid, qe = (
-                u.Quantity(
-                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]
-                ),
+                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT1"]),
                 u.Quantity(hdulist[1].data["qe"], hdulist[1].header["TUNIT2"]),
             )
         return wav_grid, qe
@@ -347,9 +346,7 @@ class RefMixins:
         """Returns the Vega magnitude system zeropoint of the detector."""
         wavelength, spectrum = self._get_vega_data()
         sens = self.get_sensitivity(wavelength)
-        zeropoint = np.trapz(spectrum * sens, wavelength) / np.trapz(
-            sens, wavelength
-        )
+        zeropoint = np.trapz(spectrum * sens, wavelength) / np.trapz(sens, wavelength)
         return zeropoint
 
 
@@ -375,9 +372,7 @@ class NIRDAReference(RefMixins):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.pixel_position_file) as hdulist:
             wav_grid, pixel_position = (
-                u.Quantity(
-                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
-                ),
+                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]),
                 u.Quantity(
                     hdulist[1].data["pixel"],
                     hdulist[1].header["TUNIT1"],
@@ -442,9 +437,7 @@ class NIRDAReference(RefMixins):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.spectrum_normalization_file) as hdulist:
             pix_grid, sens = (
-                u.Quantity(
-                    hdulist[1].data["pixel"], hdulist[1].header["TUNIT1"]
-                ),
+                u.Quantity(hdulist[1].data["pixel"], hdulist[1].header["TUNIT1"]),
                 u.Quantity(
                     hdulist[1].data["Sensitivity Per Pixel"],
                     hdulist[1].header["TUNIT3"],
@@ -457,9 +450,7 @@ class NIRDAReference(RefMixins):
         """This helper function ensures that we only have to do the IO of this file once"""
         with fits.open(self.spectrum_normalization_file) as hdulist:
             wav_grid, sens = (
-                u.Quantity(
-                    hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
-                ),
+                u.Quantity(hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]),
                 u.Quantity(
                     hdulist[1].data["Sensitivity Per Wavelength"],
                     hdulist[1].header["TUNIT4"],
@@ -521,6 +512,10 @@ class VISDAReference(RefMixins):
 
     This class can only load objects or give file paths to objects that exist in the package. It can not make new objects.
     """
+
+    @property
+    def bias_0d_file(self):
+        return f"{PACKAGEDIR}/data/{self.name.lower()}/bias_0D.fits"
 
     @property
     def name(self):
