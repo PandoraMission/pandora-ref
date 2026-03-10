@@ -220,6 +220,13 @@ class RefMixins:
         return value * unit
 
     @lru_cache()
+    def get_bias_0d(self):
+        with fits.open(self.bias_0d_file) as hdulist:
+            unit = u.Quantity(f"1 {hdulist[1].header['TUNIT1']}".lower())
+            value = hdulist[1].data[0][0]
+        return value * unit
+
+    @lru_cache()
     def get_gain(self):
         with fits.open(self.gain_file) as hdulist:
             unit = u.Quantity(f"1 {hdulist[0].header['UNIT']}")
@@ -521,6 +528,10 @@ class VISDAReference(RefMixins):
 
     This class can only load objects or give file paths to objects that exist in the package. It can not make new objects.
     """
+
+    @property
+    def bias_0d_file(self):
+        return f"{PACKAGEDIR}/data/{self.name.lower()}/bias_0D.fits"
 
     @property
     def name(self):

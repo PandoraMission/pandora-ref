@@ -23,11 +23,12 @@ def test_path_objects():
         obj = Ref()
         for key in keys:
             if key.endswith("_file"):
-                assert os.path.isfile(getattr(obj, key))
-                if getattr(obj, key).endswith(".fits"):
-                    with fits.open(getattr(obj, key)) as hdulist:
-                        assert hdulist[0].header["VERSION"] != ""
-                        assert hdulist[0].header["INSTRMNT"] == name
+                if hasattr(obj, key):
+                    assert os.path.isfile(getattr(obj, key))
+                    if getattr(obj, key).endswith(".fits"):
+                        with fits.open(getattr(obj, key)) as hdulist:
+                            assert hdulist[0].header["VERSION"] != ""
+                            assert hdulist[0].header["INSTRMNT"] == name
     return
 
 
@@ -36,6 +37,9 @@ def test_get_wcs():
     for name, Ref in zip(["NIRDA", "VISDA"], [NIRDAReference, VISDAReference]):
         obj = Ref()
         wcs = obj.get_wcs()
+        assert isinstance(wcs, WCS)
+        wcs = obj.get_wcs(target_ra=200, target_dec=10, theta=70)
+        assert np.rad2deg(np.arctan2(wcs.wcs.pc[1, 0], wcs.wcs.pc[0, 0])) == 70
         assert isinstance(wcs, WCS)
 
 
