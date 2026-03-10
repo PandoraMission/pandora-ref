@@ -162,6 +162,7 @@ Below is a table of the contents of `pandoraref`. This table is updated automati
 | NIRDA        | throughput_file             | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 95.62 KB    |
 | NIRDA        | wcs_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 | VISDA        | bad_pixel_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 98.44 KB    |
+| VISDA        | bias_0d_file                | 1.0            | COMMISSIONING | Pandora DPC          | Rae Holcomb      | 2026-03-09  | 8.44 KB     |
 | VISDA        | bias_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 90.00 KB    |
 | VISDA        | dark_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 | VISDA        | flat_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 165.94 KB   |
