@@ -13,6 +13,7 @@ from astropy.io import fits
 from astropy.wcs import WCS
 
 from . import PACKAGEDIR
+from .wcs import create_wcs
 
 __all__ = ["NIRDAReference", "VISDAReference"]
 
@@ -68,105 +69,101 @@ class RefMixins:
     def prf_file(self):
         return f"{PACKAGEDIR}/data/{self.name.lower()}/prf.fits"
 
-    def get_wcs(
-        self,
-        target_ra: u.Quantity = 0 * u.deg,
-        target_dec: u.Quantity = 0 * u.deg,
-        theta: u.Quantity = 0 * u.deg,
-        distortion=True,
-        rareflect=False,
-        decreflect=False,
-        xreflect=False,
-        yreflect=False,
-    ):
-        """Get the World Coordinate System for a detector as an astropy.wcs.WCS object, given pointing parameters.
-        This method only updates the CRVAL and PC parameters, the rest of the WCS is set by reference products
-        within this package.
+    # def get_wcs(
+    #     self,
+    #     target_ra: u.Quantity = 0 * u.deg,
+    #     target_dec: u.Quantity = 0 * u.deg,
+    #     theta: u.Quantity = 0 * u.deg,
+    #     distortion=False,
+    #     rareflect=False,
+    #     decreflect=False,
+    #     xreflect=False,
+    #     yreflect=False,
+    # ):
+    #     """Get the World Coordinate System for a detector as an astropy.wcs.WCS object, given pointing parameters.
+    #     This method only updates the CRVAL and PC parameters, the rest of the WCS is set by reference products
+    #     within this package.
 
-        Parameters:
-        -----------
-        target_ra: astropy.units.Quantity
-            The target RA in degrees
-        target_dec: astropy.units.Quantity
-            The target Dec in degrees
-        theta: astropy.units.Quantity
-            The observatory angle in degrees
-        rareflect: bool
-            Whether to reflect the RA dimension. This changes whether RA goes left to right or right to left.
-        decreflect: bool
-            Whether to reflect the Dec dimension. This changes whether Dec goes bottom to top or top to bottom.
-        xreflect: bool
-            Whether to reflect the x (column) dimension.
-        yreflect: bool
-            Whether to reflect the y (row) dimension.
+    #     Parameters:
+    #     -----------
+    #     target_ra: astropy.units.Quantity
+    #         The target RA in degrees
+    #     target_dec: astropy.units.Quantity
+    #         The target Dec in degrees
+    #     theta: astropy.units.Quantity
+    #         The observatory angle in degrees
+    #     rareflect: bool
+    #         Whether to reflect the RA dimension. This changes whether RA goes left to right or right to left.
+    #     decreflect: bool
+    #         Whether to reflect the Dec dimension. This changes whether Dec goes bottom to top or top to bottom.
+    #     xreflect: bool
+    #         Whether to reflect the x (column) dimension.
+    #     yreflect: bool
+    #         Whether to reflect the y (row) dimension.
 
-        Returns:
-        --------
-        wcs: astropy.wcs.WCS
-            World Coordinate System object
-        """
-        target_ra = u.Quantity(target_ra, "deg")
-        target_dec = u.Quantity(target_dec, "deg")
-        theta = u.Quantity(theta, "deg")
-        hdu = fits.open(self.wcs_file)[0]
-        matrix = np.asarray(
-            [
-                [
-                    np.cos(np.deg2rad(theta.value)),
-                    -np.sin(np.deg2rad(theta.value)),
-                ],
-                [
-                    np.sin(np.deg2rad(theta.value)),
-                    np.cos(np.deg2rad(theta.value)),
-                ],
-            ]
-        )
-        hdu.header["CRVAL1"] = target_ra.value
-        hdu.header["CRVAL2"] = target_dec.value
-        for idx in range(2):
-            for jdx in range(2):
-                hdu.header[f"PC{idx + 1}_{jdx + 1}"] = matrix[idx, jdx]
+    #     Returns:
+    #     --------
+    #     wcs: astropy.wcs.WCS
+    #         World Coordinate System object
+    #     """
+    #     target_ra = u.Quantity(target_ra, "deg")
+    #     target_dec = u.Quantity(target_dec, "deg")
+    #     theta = u.Quantity(theta, "deg")
+    #     hdu = fits.open(self.wcs_file)[0]
+    #     matrix = np.asarray(
+    #         [
+    #             [
+    #                 np.cos(np.deg2rad(theta.value)),
+    #                 -np.sin(np.deg2rad(theta.value)),
+    #             ],
+    #             [
+    #                 np.sin(np.deg2rad(theta.value)),
+    #                 np.cos(np.deg2rad(theta.value)),
+    #             ],
+    #         ]
+    #     )
+    #     hdu.header["CRVAL1"] = target_ra.value
+    #     hdu.header["CRVAL2"] = target_dec.value
+    #     for idx in range(2):
+    #         for jdx in range(2):
+    #             hdu.header[f"PC{idx + 1}_{jdx + 1}"] = matrix[idx, jdx]
 
-        if distortion:
-            sip_hdr = fits.open(self.sip_file)[0].header
-            cards = [
-                card
-                for card in sip_hdr.cards
-                if (
-                    card[0].startswith("A_")
-                    | card[0].startswith("B_")
-                    | card[0].startswith("AP_")
-                    | card[0].startswith("BP_")
-                )
-            ]
-            hdu.header.extend(cards)
-            hdu.header["CTYPE1"] = "RA---TAN-SIP"
-            hdu.header["CTYPE2"] = "DEC--TAN-SIP"
-        hdu.header["CDELT1"] = float(hdu.header["CDELT1"]) * (-1) ** (
-            int(rareflect)
-        )
-        hdu.header["CDELT2"] = float(hdu.header["CDELT2"]) * (-1) ** (
-            int(decreflect)
-        )
-        R = np.asarray(
-            [
-                [hdu.header["PC1_1"], hdu.header["PC1_2"]],
-                [hdu.header["PC2_1"], hdu.header["PC2_2"]],
-            ]
-        )
-        R = R.dot(np.asarray([[1, 0], [0, (-1) ** (int(xreflect))]]))
-        R = R.dot(np.asarray([[(-1) ** (int(yreflect)), 0], [0, 1]]))
-        hdu.header["PC1_1"] = R[0, 0]
-        hdu.header["PC1_2"] = R[0, 1]
-        hdu.header["PC2_1"] = R[1, 0]
-        hdu.header["PC2_2"] = R[1, 1]
+    #     if distortion:
+    #         sip_hdr = fits.open(self.sip_file)[0].header
+    #         cards = [
+    #             card
+    #             for card in sip_hdr.cards
+    #             if (
+    #                 card[0].startswith("A_")
+    #                 | card[0].startswith("B_")
+    #                 | card[0].startswith("AP_")
+    #                 | card[0].startswith("BP_")
+    #             )
+    #         ]
+    #         hdu.header.extend(cards)
+    #         hdu.header["CTYPE1"] = "RA---TAN-SIP"
+    #         hdu.header["CTYPE2"] = "DEC--TAN-SIP"
+    #     hdu.header["CDELT1"] = float(hdu.header["CDELT1"]) * (-1) ** (int(rareflect))
+    #     hdu.header["CDELT2"] = float(hdu.header["CDELT2"]) * (-1) ** (int(decreflect))
+    #     R = np.asarray(
+    #         [
+    #             [hdu.header["PC1_1"], hdu.header["PC1_2"]],
+    #             [hdu.header["PC2_1"], hdu.header["PC2_2"]],
+    #         ]
+    #     )
+    #     R = R.dot(np.asarray([[1, 0], [0, (-1) ** (int(xreflect))]]))
+    #     R = R.dot(np.asarray([[(-1) ** (int(yreflect)), 0], [0, 1]]))
+    #     hdu.header["PC1_1"] = R[0, 0]
+    #     hdu.header["PC1_2"] = R[0, 1]
+    #     hdu.header["PC2_1"] = R[1, 0]
+    #     hdu.header["PC2_2"] = R[1, 1]
 
-        with warnings.catch_warnings():
-            # The warning here is because this is a WCS with no data associated
-            warnings.simplefilter("ignore")
-            wcs = WCS(hdu.header)
+    #     with warnings.catch_warnings():
+    #         # The warning here is because this is a WCS with no data associated
+    #         warnings.simplefilter("ignore")
+    #         wcs = WCS(hdu.header)
 
-        return wcs
+    #     return wcs
 
     def get_sip(self):
         """Retrieve the SIP file as an astropy.wcs.SIP object"""
@@ -522,6 +519,20 @@ class NIRDAReference(RefMixins):
             sens.unit,
         )
 
+    def get_wcs_from_VITL(self, target_ra=0, target_dec=0, theta=0):
+        return create_wcs(
+            target_ra,
+            target_dec,
+            -theta - 90,
+            naxis1=2048,
+            naxis2=2048,
+            crpix1=1781,
+            crpix2=1085,
+            pixel_scale=1.19 * u.arcsecond / u.pixel,
+            xreflect=False,
+            yreflect=False,
+        )
+
 
 class VISDAReference(RefMixins):
     """Class for returning paths to the VISDA reference data files.
@@ -539,3 +550,17 @@ class VISDAReference(RefMixins):
 
     def __repr__(self):
         return "VISDAReference Object"
+
+    def get_wcs_from_VITL(self, target_ra=0, target_dec=0, theta=0):
+        return create_wcs(
+            target_ra,
+            target_dec,
+            -theta,
+            naxis1=2048,
+            naxis2=2048,
+            crpix1=1023.65287599,
+            crpix2=1022.45894777,
+            pixel_scale=(0.78301 * u.arcsecond / u.pixel),
+            xreflect=False,
+            yreflect=False,
+        )

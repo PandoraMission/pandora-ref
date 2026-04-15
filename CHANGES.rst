@@ -1,3 +1,9 @@
+v1.1.0
+------
+
+- Added simple implementations of WCS from VITL
+
+
 v0.2.0
 ------
 

@@ -111,7 +111,7 @@ def create_wcs(
     crpix1: int,
     crpix2: int,
     pixel_scale: u.Quantity,
-    xreflect: bool = True,
+    xreflect: bool = False,
     yreflect: bool = False,
 ) -> WCS.wcs:
     """Get the World Coordinate System for a detector
