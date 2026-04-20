@@ -564,3 +564,19 @@ class VISDAReference(RefMixins):
             xreflect=False,
             yreflect=False,
         )
+
+    @lru_cache()
+    def _get_stripes_data(self):
+        """This helper function ensures that we only have to do the IO of this file once"""
+        with fits.open(self.stripes_file) as hdulist:
+            stripes = hdulist[1].data
+        return stripes
+
+    def get_stripes(self):
+        """Returns simple 1D stripe bias"""
+        stripes = self._get_stripes_data()
+        return stripes[None, :] * np.ones((2048, 2048))
+
+    @property
+    def stripes_file(self):
+        return f"{PACKAGEDIR}/data/{self.name.lower()}/stripes.fits"
