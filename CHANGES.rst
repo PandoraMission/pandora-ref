@@ -1,3 +1,11 @@
+v2.0.1
+------
+
+- Added stripes for bias
+- Added WCS for SOC to calculate projected Pandora image based on their roll
+
+
+
 v1.1.0
 ------
 

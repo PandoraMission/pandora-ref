@@ -173,7 +173,7 @@ Below is a table of the contents of `pandoraref`. This table is updated automati
 | VISDA        | qe_file                     | v0.1.0         | VENDOR        | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |
 | VISDA        | readnoise_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 | VISDA        | sip_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2026-01-20  | 5.62 KB     |
-| VISDA        | stripes_file                | v0.1.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-04-20  | 8.44 KB     |
+| VISDA        | stripes_file                | v0.2.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-05-15  | 8.44 KB     |
 | VISDA        | throughput_file             | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2025-11-14  | 95.62 KB    |
 | VISDA        | wcs_file                    | v0.1.0         | SIMULATION    | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 

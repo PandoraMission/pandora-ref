@@ -202,12 +202,22 @@ class RefMixins:
             value = hdulist[0].header["DARK"]
         return value * unit
 
-    @lru_cache()
-    def get_readnoise(self):
-        with fits.open(self.readnoise_file) as hdulist:
-            unit = u.Quantity(f"1 {hdulist[0].header['UNIT']}")
-            value = hdulist[0].header["READNS"]
-        return value * unit
+    # @lru_cache()
+    # def get_readnoise(self):
+    #     with fits.open(self.readnoise_file) as hdulist:
+    #         unit = u.Quantity(f"1 {hdulist[0].header['UNIT']}")
+    #         value = hdulist[0].header["READNS"]
+    #     return value * unit
+
+    def get_readnoise(self, frmpcoad: int):
+        """Return the expected read noise per pixel
+
+        Parameters
+        ----------
+        frmpcoad: int
+            The number of frames per coad in your data.
+        """
+        return (1 / np.sqrt(frmpcoad) * 2.5 + 0.6) * u.count / u.pixel
 
     @lru_cache()
     def get_bias(self):
@@ -355,6 +365,20 @@ class RefMixins:
             sens, wavelength
         )
         return zeropoint
+
+    def get_wcs_from_SC(self, target_ra=0, target_dec=0, theta=0):
+        """Create a WCS for this detector using roll of the spacecraft with convention roll is the angle of +Y from ECI North."""
+        return self.get_wcs_from_VITL(
+            target_ra=target_ra, target_dec=target_dec, theta=theta - 6.339
+        )
+
+    def get_wcs_from_SOC(self, target_ra=0, target_dec=0, theta=0):
+        """Create a WCS for this detector using roll of the spacecraft with convention roll is the angle of +X from ECI North."""
+        return self.get_wcs_from_VITL(
+            target_ra=target_ra,
+            target_dec=target_dec,
+            theta=theta - 90 - 6.339,
+        )
 
 
 class NIRDAReference(RefMixins):
