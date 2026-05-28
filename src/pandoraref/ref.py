@@ -11,6 +11,8 @@ from astropy.constants import c, h
 # import pandorasat as ps
 from astropy.io import fits
 from astropy.wcs import WCS
+from astropy.table import Table
+
 
 from . import PACKAGEDIR
 from .wcs import create_wcs
@@ -45,6 +47,10 @@ class RefMixins:
     def bad_pixel_file(self):
         return f"{PACKAGEDIR}/data/{self.name.lower()}/badpix.fits"
 
+    @property
+    def bad_pixel_vendor_file(self):
+        return f"{PACKAGEDIR}/data/{self.name.lower()}/badpix_vendor.fits"
+    
     @property
     def nonlin_file(self):
         return f"{PACKAGEDIR}/data/{self.name.lower()}/nonlin.fits"
@@ -187,6 +193,12 @@ class RefMixins:
             bad_pixel = hdulist[1].data
         return bad_pixel
 
+    @lru_cache()
+    def get_bad_pixel_vendor(self):
+        with fits.open(self.bad_pixel_vendor_file) as hdulist:
+            bad_pixel_table = Table.read('./data_products/badpix_vendor.fits', hdu=1)
+        return bad_pixel_table
+        
     @lru_cache()
     def _get_nonlin_data(self):
         """This helper function ensures that we only have to do the IO of this file once"""
