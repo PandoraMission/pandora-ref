@@ -1,3 +1,9 @@
+v2.1.0
+------
+
+- Added bad pixel map for NIRDA
+
+
 v2.0.1
 ------
 
