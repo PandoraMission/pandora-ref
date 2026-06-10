@@ -1,3 +1,9 @@
+v2.2.0
+------
+
+- Added two basic PRF models
+- Fixed paths for Windows OS
+
 v2.1.0
 ------
 
