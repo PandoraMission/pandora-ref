@@ -1,3 +1,8 @@
+v2.3.1
+------
+
+- Fixed bug in prf file subpixel size
+
 v2.3.0
 ------
 
