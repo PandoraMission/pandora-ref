@@ -153,6 +153,7 @@ Below is a table of the contents of `pandoraref`. This table is updated automati
 | NIRDA        | dark_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 | NIRDA        | flat_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 165.94 KB   |
 | NIRDA        | gain_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
+| NIRDA        | magnitude_conversion_file   | v1.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-10  | 2.81 KB     |
 | NIRDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 8.44 KB     |
 | NIRDA        | pixel_position_file         | Synthetic_V1   | SIMULATION    | Pandora DPC Software | Christina Hedges | 2025-11-14  | 30.94 KB    |
 | NIRDA        | prf_file                    | v1.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-09  | 36.56 KB    |
@@ -169,6 +170,7 @@ Below is a table of the contents of `pandoraref`. This table is updated automati
 | VISDA        | dark_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 | VISDA        | flat_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 165.94 KB   |
 | VISDA        | gain_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
+| VISDA        | magnitude_conversion_file   | v1.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-10  | 2.81 KB     |
 | VISDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 8.44 KB     |
 | VISDA        | prf_file                    | v1.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-09  | 39.38 KB    |
 | VISDA        | qe_file                     | v0.1.0         | VENDOR        | Pandora DPC Software | Christina Hedges | 2025-11-14  | 8.44 KB     |

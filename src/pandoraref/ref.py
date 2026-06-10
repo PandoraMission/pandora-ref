@@ -23,6 +23,15 @@ class RefMixins:
     """Mixins common to each detector."""
 
     @property
+    def magnitude_conversion_file(self):
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "mag_conversion.fits",
+        )
+
+    @property
     def flat_file(self):
         return os.path.join(
             PACKAGEDIR,
@@ -225,6 +234,13 @@ class RefMixins:
     #         wcs = WCS(hdu.header)
 
     #     return wcs
+
+    @lru_cache()
+    def _get_magnitude_to_flux_parameters(self):
+        """This helper function ensures that we only have to do the IO of this file once"""
+        hdr0 = fits.open(self.magnitude_conversion_file)[0].header
+        poly = np.asarray([hdr0["M"], hdr0["C"]])
+        return poly * u.Quantity(f"1 {hdr0['UNIT']}")
 
     def get_sip(self):
         """Retrieve the SIP file as an astropy.wcs.SIP object"""
@@ -455,6 +471,12 @@ class NIRDAReference(RefMixins):
     def __repr__(self):
         return "NIRDAReference Object"
 
+    def magnitude_to_flux(self, j_mag):
+        """Convert a magnitude to a flux. Must input a 2MASS j magnitude for accurate result."""
+        poly = self._get_magnitude_to_flux_parameters()
+        flux = 0.5 * 10 ** ((np.polyval(poly.value, j_mag)) / -2.5)
+        return flux * poly.unit
+
     @property
     def wavelength_prf_file(self):
         return os.path.join(
@@ -652,6 +674,12 @@ class VISDAReference(RefMixins):
             self.name.lower(),
             "bias_0D.fits",
         )
+
+    def magnitude_to_flux(self, bp_mag):
+        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
+        poly = self._get_magnitude_to_flux_parameters()
+        flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
+        return flux * poly.unit
 
     @property
     def name(self):

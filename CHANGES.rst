@@ -1,3 +1,8 @@
+v2.3.0
+------
+
+- Added magnitude conversions
+
 v2.2.0
 ------
 
