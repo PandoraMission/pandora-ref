@@ -1,4 +1,5 @@
 # Standard library
+import os
 import warnings
 from functools import lru_cache
 
@@ -23,51 +24,111 @@ class RefMixins:
 
     @property
     def flat_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/flat.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "flat.fits",
+        )
 
     @property
     def bias_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/bias.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "bias.fits",
+        )
 
     @property
     def dark_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/dark.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "dark.fits",
+        )
 
     @property
     def gain_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/gain.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "gain.fits",
+        )
 
     @property
     def readnoise_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/readnoise.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "readnoise.fits",
+        )
 
     @property
     def bad_pixel_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/badpix.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "badpix.fits",
+        )
 
     @property
     def nonlin_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/nonlin.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "nonlin.fits",
+        )
 
     @property
     def sip_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/sip.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "sip.fits",
+        )
 
     @property
     def wcs_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/wcs.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "wcs.fits",
+        )
 
     @property
     def qe_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/qe.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "qe.fits",
+        )
 
     @property
     def throughput_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/throughput.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "throughput.fits",
+        )
 
     @property
     def prf_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/prf.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "prf.fits",
+        )
 
     # def get_wcs(
     #     self,
@@ -395,8 +456,22 @@ class NIRDAReference(RefMixins):
         return "NIRDAReference Object"
 
     @property
+    def wavelength_prf_file(self):
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "wavelength_prf.fits",
+        )
+
+    @property
     def pixel_position_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/pixel_position.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "pixel_position.fits",
+        )
 
     @lru_cache()
     def _get_pixel_position_data(self):
@@ -463,7 +538,12 @@ class NIRDAReference(RefMixins):
 
     @property
     def spectrum_normalization_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/spectrum_normalization.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "spectrum_normalization.fits",
+        )
 
     @lru_cache()
     def _get_spectrum_normalization_data_per_pixel(self):
@@ -566,7 +646,12 @@ class VISDAReference(RefMixins):
 
     @property
     def bias_0d_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/bias_0D.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "bias_0D.fits",
+        )
 
     @property
     def name(self):
@@ -582,8 +667,8 @@ class VISDAReference(RefMixins):
             -theta,
             naxis1=2048,
             naxis2=2048,
-            crpix1=1023.65287599,
-            crpix2=1022.45894777,
+            crpix1=1024 + 4,
+            crpix2=1024,
             pixel_scale=(0.78301 * u.arcsecond / u.pixel),
             xreflect=False,
             yreflect=False,
@@ -603,4 +688,9 @@ class VISDAReference(RefMixins):
 
     @property
     def stripes_file(self):
-        return f"{PACKAGEDIR}/data/{self.name.lower()}/stripes.fits"
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "stripes.fits",
+        )
