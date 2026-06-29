@@ -151,7 +151,7 @@ Below is a table of the contents of `pandoraref`. This table is updated automati
 | NIRDA        | bad_pixel_file              | v0.1.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-26  | 95.62 KB    |
 | NIRDA        | bias_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 90.00 KB    |
 | NIRDA        | dark_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
-| NIRDA        | flat_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 165.94 KB   |
+| NIRDA        | flat_file                   | v0.1.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-29  | 227.81 KB   |
 | NIRDA        | gain_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 | NIRDA        | magnitude_conversion_file   | v1.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-10  | 2.81 KB     |
 | NIRDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 8.44 KB     |
