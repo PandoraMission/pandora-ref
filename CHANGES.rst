@@ -1,3 +1,9 @@
+v2.4.0
+------
+
+- Updated names for wavelength function
+- Updated wavelength solution
+
 v2.3.2
 ------
 

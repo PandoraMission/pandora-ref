@@ -72,7 +72,7 @@ def test_get_pixel_position():
     """Test the wcs getting"""
     obj = NIRDAReference()
     wavelength = np.arange(0.1, 3) * u.micron
-    pixel = obj.get_pixel_position(wavelength)
+    pixel = obj.get_position_from_wavelength(wavelength)
     assert isinstance(pixel, u.Quantity)
     assert len(pixel) == len(wavelength)
 

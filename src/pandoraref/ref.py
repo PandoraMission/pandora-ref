@@ -510,7 +510,7 @@ class NIRDAReference(RefMixins):
             )
         return wav_grid, pixel_position
 
-    def get_pixel_position(self, wavelength):
+    def get_position_from_wavelength(self, wavelength):
         """
         Get the pixel position on the detector given a wavelength.
 
@@ -525,16 +525,18 @@ class NIRDAReference(RefMixins):
             Array of the pixel positions
         """
         wav_grid, pixel_position = self._get_pixel_position_data()
+        s = np.argsort(wav_grid)
+
         return u.Quantity(
             np.interp(
                 u.Quantity(wavelength, u.micron).value,
-                wav_grid.to(u.micron).value,
-                pixel_position.value,
+                wav_grid.to(u.micron).value[s],
+                pixel_position.value[s],
             )
             * u.pixel
         )
 
-    def get_wavelength_position(self, pixel):
+    def get_wavelength_from_position(self, pixel):
         """
         Get the wavelength of a pixel position on the detector.
 
@@ -545,15 +547,17 @@ class NIRDAReference(RefMixins):
 
         Returns
         -------
-        qe : npt.NDArray, u.Quantity
+        wav : npt.NDArray, u.Quantity
             Array of the wavelength of the pixel position
         """
         wav_grid, pixel_position = self._get_pixel_position_data()
+        s = np.argsort(pixel_position)
+
         return u.Quantity(
             np.interp(
                 u.Quantity(pixel, u.pixel).value,
-                pixel_position.value,
-                wav_grid.value,
+                pixel_position.value[s],
+                wav_grid.value[s],
             )
             * wav_grid.unit
         )
