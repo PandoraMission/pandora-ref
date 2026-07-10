@@ -1,4 +1,4 @@
-v2.4.0
+v2.6.0
 ------
 
 - Updated names for wavelength function
