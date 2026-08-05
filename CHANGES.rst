@@ -1,6 +1,11 @@
 v2.6.0
 ------
 
+- Updated PRF functions using July/August data
+
+v2.6.0
+------
+
 - Updated names for wavelength function
 - Updated wavelength solution
 
