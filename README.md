@@ -155,7 +155,7 @@ Below is a table of the contents of `pandoraref`. This table is updated automati
 | NIRDA        | gain_file                   | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
 | NIRDA        | magnitude_conversion_file   | v1.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-06-10  | 2.81 KB     |
 | NIRDA        | nonlin_file                 | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 8.44 KB     |
-| NIRDA        | pixel_position_file         | v1.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-07-10  | 19.69 KB    |
+| NIRDA        | pixel_position_file         | v2.0.0         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-08-11  | 123.75 KB   |
 | NIRDA        | prf_file                    | v1.0.2         | SCIENCE       | Pandora DPC Software | Christina Hedges | 2026-08-05  | 36.56 KB    |
 | NIRDA        | qe_file                     | v0.1.0         | THEORETICAL   | Pandora DPC Software | Christina Hedges | 2026-01-20  | 36.56 KB    |
 | NIRDA        | readnoise_file              | dummy          | DUMMY         | Pandora DPC Software | Christina Hedges | 2026-01-20  | 2.81 KB     |
