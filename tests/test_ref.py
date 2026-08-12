@@ -84,13 +84,13 @@ def test_get_spectrum_normalization():
     sens = obj.get_spectrum_normalization_per_wavelength(wavelength)
     assert isinstance(sens, u.Quantity)
     assert len(sens) == len(wavelength)
-    assert sens.unit.is_equivalent("cm2 electron / erg")
+    assert sens.unit.is_equivalent("cm2 Angstrom ct / erg")
 
     pixel = np.arange(-200, 200) * u.pixel
     sens = obj.get_spectrum_normalization_per_pixel(pixel)
     assert isinstance(sens, u.Quantity)
     assert len(sens) == len(pixel)
-    assert sens.unit.is_equivalent("cm2 Angstrom electron / (erg pix)")
+    assert sens.unit.is_equivalent("cm2 Angstrom ct / erg")
 
 
 def test_vega():

@@ -580,7 +580,7 @@ class NIRDAReference(RefMixins):
                     hdulist[1].data["pixel"], hdulist[1].header["TUNIT1"]
                 ),
                 u.Quantity(
-                    hdulist[1].data["Sensitivity Per Pixel"],
+                    hdulist[1].data["sensitivity"],
                     hdulist[1].header["TUNIT3"],
                 ),
             )
@@ -595,8 +595,8 @@ class NIRDAReference(RefMixins):
                     hdulist[1].data["wavelength"], hdulist[1].header["TUNIT2"]
                 ),
                 u.Quantity(
-                    hdulist[1].data["Sensitivity Per Wavelength"],
-                    hdulist[1].header["TUNIT4"],
+                    hdulist[1].data["sensitivity"],
+                    hdulist[1].header["TUNIT3"],
                 ),
             )
         return wav_grid, sens
