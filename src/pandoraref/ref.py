@@ -235,12 +235,19 @@ class RefMixins:
 
     #     return wcs
 
+    # @lru_cache()
+    # def _get_magnitude_to_flux_parameters(self):
+    #     """This helper function ensures that we only have to do the IO of this file once"""
+    #     hdr0 = fits.open(self.magnitude_conversion_file)[0].header
+    #     poly = np.asarray([hdr0["M"], hdr0["C"]])
+    #     return poly * u.Quantity(f"1 {hdr0['UNIT']}")
+
     @lru_cache()
     def _get_magnitude_to_flux_parameters(self):
         """This helper function ensures that we only have to do the IO of this file once"""
         hdr0 = fits.open(self.magnitude_conversion_file)[0].header
-        poly = np.asarray([hdr0["M"], hdr0["C"]])
-        return poly * u.Quantity(f"1 {hdr0['UNIT']}")
+        zp = hdr0["ZP"]
+        return zp
 
     def get_sip(self):
         """Retrieve the SIP file as an astropy.wcs.SIP object"""
@@ -471,11 +478,11 @@ class NIRDAReference(RefMixins):
     def __repr__(self):
         return "NIRDAReference Object"
 
-    def magnitude_to_flux(self, j_mag):
-        """Convert a magnitude to a flux. Must input a 2MASS j magnitude for accurate result."""
-        poly = self._get_magnitude_to_flux_parameters()
-        flux = 0.5 * 10 ** ((np.polyval(poly.value, j_mag)) / -2.5)
-        return flux * poly.unit
+    # def magnitude_to_flux(self, j_mag):
+    #     """Convert a magnitude to a flux. Must input a 2MASS j magnitude for accurate result."""
+    #     poly = self._get_magnitude_to_flux_parameters()
+    #     flux = 0.5 * 10 ** ((np.polyval(poly.value, j_mag)) / -2.5)
+    #     return flux * poly.unit
 
     @property
     def wavelength_prf_file(self):
@@ -494,6 +501,33 @@ class NIRDAReference(RefMixins):
             self.name.lower(),
             "pixel_position.fits",
         )
+
+    @property
+    def pixel_error_file(self):
+        return os.path.join(
+            PACKAGEDIR,
+            "data",
+            self.name.lower(),
+            "pixel_error.fits",
+        )
+
+    @lru_cache()
+    def _get_pixel_error_data(self):
+        with fits.open(self.pixel_error_file) as hdulist:
+            coeffs = np.asarray(
+                [hdulist[0].header["error0"], hdulist[0].header["error1"]]
+            )
+        return coeffs
+
+    def get_pixel_error(self, flux):
+        """From a single pixel flux or brightness measurement creates an error estimate"""
+        coeffs = self._get_pixel_error_data()
+        errors = np.asarray(
+            [np.atleast_1d(flux) ** idx for idx in np.arange(len(coeffs)) / 2]
+        ).T.dot(coeffs)
+        if isinstance(flux, u.Quantity):
+            errors *= flux.unit
+        return errors
 
     @lru_cache()
     def _get_pixel_position_data(self):
@@ -663,6 +697,26 @@ class NIRDAReference(RefMixins):
             yreflect=False,
         )
 
+    def magnitude_to_flux(self, bp_mag):
+        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
+        zp = self._get_magnitude_to_flux_parameters()
+        # flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
+        flux = 10 ** ((bp_mag - zp) / -2.5)
+        return flux
+
+    def flux_to_magnitude(self, flux):
+        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
+        if isinstance(flux, u.Quantity):
+            try:
+                u.Quantity(flux, "count/s")
+            except ValueError:
+                raise ValueError("Flux must be in units of counts/s")
+        zp = self._get_magnitude_to_flux_parameters()
+        flux0 = 10 ** ((-zp) / -2.5)
+        # flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
+        mag = -2.5 * np.log10(u.Quantity(flux, "count/s").value / flux0)
+        return mag
+
 
 class VISDAReference(RefMixins):
     """Class for returning paths to the VISDA reference data files.
@@ -678,12 +732,6 @@ class VISDAReference(RefMixins):
             self.name.lower(),
             "bias_0D.fits",
         )
-
-    def magnitude_to_flux(self, bp_mag):
-        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
-        poly = self._get_magnitude_to_flux_parameters()
-        flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
-        return flux * poly.unit
 
     @property
     def name(self):

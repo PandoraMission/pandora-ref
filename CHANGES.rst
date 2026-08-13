@@ -1,3 +1,10 @@
+v2.9.0
+------
+
+- Updated PRF models
+- Updated magnitude conversions
+- Added simple error files which will be refined later
+
 v2.6.0
 ------
 
