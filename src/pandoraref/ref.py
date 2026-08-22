@@ -464,6 +464,44 @@ class RefMixins:
             theta=theta - 90 - 6.339,
         )
 
+    def magnitude_to_flux(self, bp_mag):
+        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
+        zp = self._get_magnitude_to_flux_parameters()
+        # flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
+        flux = 10 ** ((bp_mag - zp) / -2.5)
+        return flux
+
+    def flux_to_magnitude(self, flux):
+        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
+        if isinstance(flux, u.Quantity):
+            try:
+                u.Quantity(flux, "count/s")
+            except ValueError:
+                raise ValueError("Flux must be in units of counts/s")
+        zp = self._get_magnitude_to_flux_parameters()
+        flux0 = 10 ** ((-zp) / -2.5)
+        # flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
+        mag = -2.5 * np.log10(u.Quantity(flux, "count/s").value / flux0)
+        return mag
+
+    @lru_cache()
+    def _get_pixel_error_data(self):
+        with fits.open(self.pixel_error_file) as hdulist:
+            coeffs = np.asarray(
+                [hdulist[0].header["error0"], hdulist[0].header["error1"]]
+            )
+        return coeffs
+
+    def get_pixel_error(self, flux):
+        """From a single pixel flux or brightness measurement creates an error estimate"""
+        coeffs = self._get_pixel_error_data()
+        errors = np.asarray(
+            [np.atleast_1d(flux) ** idx for idx in np.arange(len(coeffs)) / 2]
+        ).T.dot(coeffs)
+        if isinstance(flux, u.Quantity):
+            errors *= flux.unit
+        return errors
+
 
 class NIRDAReference(RefMixins):
     """Class for returning paths to the NIRDA reference data files.
@@ -510,24 +548,6 @@ class NIRDAReference(RefMixins):
             self.name.lower(),
             "pixel_error.fits",
         )
-
-    @lru_cache()
-    def _get_pixel_error_data(self):
-        with fits.open(self.pixel_error_file) as hdulist:
-            coeffs = np.asarray(
-                [hdulist[0].header["error0"], hdulist[0].header["error1"]]
-            )
-        return coeffs
-
-    def get_pixel_error(self, flux):
-        """From a single pixel flux or brightness measurement creates an error estimate"""
-        coeffs = self._get_pixel_error_data()
-        errors = np.asarray(
-            [np.atleast_1d(flux) ** idx for idx in np.arange(len(coeffs)) / 2]
-        ).T.dot(coeffs)
-        if isinstance(flux, u.Quantity):
-            errors *= flux.unit
-        return errors
 
     @lru_cache()
     def _get_pixel_position_data(self):
@@ -696,26 +716,6 @@ class NIRDAReference(RefMixins):
             xreflect=False,
             yreflect=False,
         )
-
-    def magnitude_to_flux(self, bp_mag):
-        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
-        zp = self._get_magnitude_to_flux_parameters()
-        # flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
-        flux = 10 ** ((bp_mag - zp) / -2.5)
-        return flux
-
-    def flux_to_magnitude(self, flux):
-        """Convert a magnitude to a flux. Must input a Gaia bp magnitude for accurate result."""
-        if isinstance(flux, u.Quantity):
-            try:
-                u.Quantity(flux, "count/s")
-            except ValueError:
-                raise ValueError("Flux must be in units of counts/s")
-        zp = self._get_magnitude_to_flux_parameters()
-        flux0 = 10 ** ((-zp) / -2.5)
-        # flux = 0.5 * 10 ** ((np.polyval(poly.value, bp_mag)) / -2.5)
-        mag = -2.5 * np.log10(u.Quantity(flux, "count/s").value / flux0)
-        return mag
 
 
 class VISDAReference(RefMixins):
