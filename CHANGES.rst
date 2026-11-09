@@ -1,3 +1,7 @@
+v2.9.2
+------
+- Updated sensitivity function
+
 v2.9.0
 ------
 
